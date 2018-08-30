@@ -38,6 +38,7 @@
                     console.log('req:', eventName, responseToken, iframe)
                     iframe.postMessage({
                         messengerjs:{
+                            isReq: true,
                             eventName,
                             args,
                             responseToken
@@ -53,6 +54,23 @@
             };
             return promise;
         }
+    }
+    var handleResponse = function(data){
+        //console.log('on msg', window.location.href, data)
+        var data = data.data;
+        if(data.messengerjs && data.messengerjs.isResp && _waitingPromiseMap[data.messengerjs.responseToken]){
+            process(data.messengerjs)
+        }
+    };
+    var process = (data)=>{
+        var result = data.result;
+        console.log('on response', window.location.href, result)
+
+    };
+    if (window.addEventListener) {
+        window.addEventListener("message", handleResponse);
+    } else if (window.attachEvent) {
+        window.attachEvent("onmessage", handleResponse);
     }
     
 })();

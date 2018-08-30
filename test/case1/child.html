@@ -5,9 +5,11 @@
 </head>
 <body>
     <script type="text/javascript">
-
+        messenger.listen('foo', ()=>{
+            return 'bar'
+        })
     </script>
-    <button onclick="invoke()">call</button>
+    <button onclick="call()">call</button>
 
 </body>
 </html>

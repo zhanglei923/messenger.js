@@ -72,6 +72,7 @@ this._howMany=0,this._unwrap=!1,this._initialized=!1}function o(t,e){if((0|e)!==
                     console.log('req:', eventName, responseToken, iframe)
                     iframe.postMessage({
                         messengerjs:{
+                            isReq: true,
                             eventName,
                             args,
                             responseToken
@@ -88,31 +89,72 @@ this._howMany=0,this._unwrap=!1,this._initialized=!1}function o(t,e){if((0|e)!==
             return promise;
         }
     }
+    var handleResponse = function(data){
+        //console.log('on msg', window.location.href, data)
+        var data = data.data;
+        if(data.messengerjs && data.messengerjs.isResp && _waitingPromiseMap[data.messengerjs.responseToken]){
+            process(data.messengerjs)
+        }
+    };
+    var process = (data)=>{
+        var result = data.result;
+        console.log('on response', window.location.href, result)
+
+    };
+    if (window.addEventListener) {
+        window.addEventListener("message", handleResponse);
+    } else if (window.attachEvent) {
+        window.attachEvent("onmessage", handleResponse);
+    }
     
 })();
 //listener
 (()=>{
-    var handleMessage = function (data) {
-        console.log('got msg', window.location.href, data)
+    var _listeningEvents = {}
+    var handleRequest = function (data) {
+        //console.log('on msg', window.location.href, data)
         var data = data.data;
-        if(data.messengerjs){
-            handleRequest(data.messengerjs)
+        if(data.messengerjs && data.messengerjs.isReq){
+            process(data.messengerjs)
         }
     }
-    var handleRequest = function(data){
+    var process = function(data){
         //invoke
         var args = data.args;
+        var eventName = data.eventName;
         var responseToken = data.responseToken;
-
-        console.log('result', args, responseToken)
+        
+        var fn = _listeningEvents[eventName]
+        if(fn){
+            var result = fn.apply(window, args)
+            console.log('received:', eventName, args, responseToken, result)
+            window.setTimeout(()=>{
+                var iframelist = window.messenger.getTargetWindows();
+                console.log(iframelist.length)
+                for(var i = 0; i < iframelist.length; i++){
+                    var iframe = iframelist[i]
+                    if(iframe.postMessage){
+                        console.log('send response:', eventName, responseToken, iframe)
+                        iframe.postMessage({
+                            messengerjs:{
+                                isResp: true,                                
+                                responseToken,
+                                result
+                            }
+                        }, '*');
+                    }
+                }
+            }, 2000)
+            
+        }
     }
-    window.messenger.listen = function(){
-
+    window.messenger.listen = function(eventName, callback){
+        _listeningEvents[eventName] = callback;
     };
     if (window.addEventListener) {
-        window.addEventListener("message", handleMessage);
+        window.addEventListener("message", handleRequest);
     } else if (window.attachEvent) {
-        window.attachEvent("onmessage", handleMessage);
+        window.attachEvent("onmessage", handleRequest);
     }
     console.log('listening...')
 })();
