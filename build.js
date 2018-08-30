@@ -8,8 +8,8 @@ let npmPath = pathUtil.resolve(__dirname, '../messenger-npm')
 
 let bluebird = fs.readFileSync(pathUtil.resolve(libPath, 'bluebird.min.js'),'utf8');
 let content = fs.readFileSync(pathUtil.resolve(srcPath, 'main.js'),'utf8');
-let content1 = fs.readFileSync(pathUtil.resolve(srcPath, 'listener.js'),'utf8');
-let content2 = fs.readFileSync(pathUtil.resolve(srcPath, 'send.js'),'utf8');
+let content1 = fs.readFileSync(pathUtil.resolve(srcPath, 'requester.js'),'utf8');
+let content2 = fs.readFileSync(pathUtil.resolve(srcPath, 'listener.js'),'utf8');
 content = content+'\n'+content1+'\n'+content2;
 var clean = (content) =>{
     content = content.replace(/console\.log/g, '//')

@@ -4,16 +4,17 @@
     <script src="../../dist/messenger.dist.js" ></script>
 </head>
 <body>
-    main page
     <script>
-
+        var call=()=>{
+            messenger.request('asdf', 11,22,true,[])
+        }
     
     </script>
 
     <iframe id="frame1" src="./child.html" ></iframe>
     <iframe id="frame2" src="./child.html" ></iframe>
-    <button onclick="callSelf()">call self</button>
-    <button onclick="callChild()">call child</button>
+    <hr>
+    <button onclick="call()">call</button>
 
 </body>
 </html>
