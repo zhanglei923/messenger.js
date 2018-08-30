@@ -1,0 +1,7 @@
+{
+  "devDependencies": {
+    "@babel/core": "^7.0.0",
+    "webpack": "^4.17.1",
+    "webpack-cli": "^3.1.0"
+  }
+}
