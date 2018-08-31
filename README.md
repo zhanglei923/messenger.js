@@ -1,4 +1,6 @@
-# Messenger.JS
+# Messenger.js
+
+A New Generation Browser Side Event-Bus.
 
 License
 =======
