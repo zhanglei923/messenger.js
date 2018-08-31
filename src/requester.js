@@ -83,7 +83,7 @@
     };
     var process = (data)=>{
         var result = data.result;
-        console.log('on response', window.location.href, result)
+        console.warn('got response', window.location.href, result)
 
     };
     if (window.addEventListener) {

@@ -2,9 +2,9 @@
 (()=>{
     var _listeningEvents = {}
     var handleRequest = function (data) {
-        //console.log('on msg', window.location.href, data)
+        console.log('on msg', window.location.href, data)
         var data = data.data;
-        if(data.messengerjs && data.messengerjs.isReq){
+        if(data.messengerjs /**&& data.messengerjs.isReq **/){
             process(data.messengerjs)
         }
     }
@@ -15,12 +15,12 @@
         var responseToken = data.responseToken;
         
         var fn = _listeningEvents[eventName]
-        if(fn){
+        console.log('process', !!fn, window.location.href)
+        if(fn && data.isReq){
             var result = fn.apply(window, args)
-            console.log('received:', eventName, args, responseToken, result)
+            console.log('i-can-process-this-request:', eventName, args, responseToken, result)
             window.setTimeout(()=>{
                 var windows = window.messenger.getTargetWindows();
-                console.log(windows.length)
                 for(var i = 0; i < windows.length; i++){
                     var iframe = windows[i]
                     if(iframe.win.postMessage){
@@ -36,9 +36,22 @@
                     }
                 }
             }, 2000);
-        }else{
-            //转发
-
+        }
+        //转发
+        if(data.from === 'parent'){//继续向child传播
+            var iframes = document.getElementsByTagName('iframe');
+            for(var i = 0; i < iframes.length; i++){
+                data.from = 'parent';
+                //console.log('godeep', window.location.href, i, data)
+                iframes[i].contentWindow.postMessage({messengerjs:data},'*');
+            }
+        }
+        if(data.from === 'child'){//继续向parent传播
+            console.log('from child', window.location.href)
+            if(window !== parent){
+                data.from = 'child';
+                window.parent.postMessage({messengerjs:data},'*');
+            }
         }
     }
     window.messenger.listen = function(eventName, callback){
