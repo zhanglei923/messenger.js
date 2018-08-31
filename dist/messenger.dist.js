@@ -48,11 +48,13 @@ this._howMany=0,this._unwrap=!1,this._initialized=!1}function o(t,e){if((0|e)!==
             var iframelist = [];//[window.parent];
             iframelist.push({
                                 is: 'self',
+                                from: 'self',//在对方看来，是self，parent，还是child
                                 win:window
                             });
             if(window !== window.parent) {
                 iframelist.push({
                                     is: 'parent',
+                                    from: 'child',
                                     win: window.parent
                                 });
 
@@ -61,6 +63,7 @@ this._howMany=0,this._unwrap=!1,this._initialized=!1}function o(t,e){if((0|e)!==
             for(var i = 0; i < iframes.length; i++){
                 iframelist.push({
                     is: 'child',
+                    from:'parent',
                     win: iframes[i].contentWindow
                 })
             }
@@ -91,7 +94,7 @@ this._howMany=0,this._unwrap=!1,this._initialized=!1}function o(t,e){if((0|e)!==
                             args,//本次请求的参数
                             responseToken,//本次请求的token，一次性
                             thisPageId, //发起请求的页面id
-                            is: iframe.is
+                            from: iframe.from
                         }
                     }, _currentTargetHost);
                 }
@@ -156,7 +159,7 @@ this._howMany=0,this._unwrap=!1,this._initialized=!1}function o(t,e){if((0|e)!==
                                 isResp: true,                                
                                 responseToken,
                                 result,
-                                is: iframe.is
+                                from: iframe.from
                             }
                         }, '*');
                     }

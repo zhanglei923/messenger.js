@@ -30,7 +30,7 @@
                                 isResp: true,                                
                                 responseToken,
                                 result,
-                                is: iframe.is
+                                from: iframe.from
                             }
                         }, '*');
                     }

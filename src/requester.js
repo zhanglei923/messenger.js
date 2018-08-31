@@ -14,11 +14,13 @@
             var iframelist = [];//[window.parent];
             iframelist.push({
                                 is: 'self',
+                                from: 'self',//在对方看来，是self，parent，还是child
                                 win:window
                             });
             if(window !== window.parent) {
                 iframelist.push({
                                     is: 'parent',
+                                    from: 'child',
                                     win: window.parent
                                 });
 
@@ -27,6 +29,7 @@
             for(var i = 0; i < iframes.length; i++){
                 iframelist.push({
                     is: 'child',
+                    from:'parent',
                     win: iframes[i].contentWindow
                 })
             }
@@ -57,7 +60,7 @@
                             args,//本次请求的参数
                             responseToken,//本次请求的token，一次性
                             thisPageId, //发起请求的页面id
-                            is: iframe.is
+                            from: iframe.from
                         }
                     }, _currentTargetHost);
                 }
