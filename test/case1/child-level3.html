@@ -10,7 +10,9 @@
         })
 
         var askTop = ()=>{
-            messenger.request('askTop', 3)
+            messenger.request('askTop', 3).then((result)=>{
+                console.warn('got!', result)
+            })
         }
     </script>
     <button onclick="askTop()">call</button>

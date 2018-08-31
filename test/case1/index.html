@@ -6,8 +6,12 @@
 <body>
     <script>
         var call=()=>{
-            messenger.request('asklevel3', 11,22,true,[])
-            messenger.request('asklevel1', 11,22,true,[])
+            messenger.request('asklevel3', 11,22,true,[]).then((result)=>{
+                console.warn('got!', result)
+            })
+            messenger.request('asklevel1', 11,22,true,[]).then((result)=>{
+                console.warn('got!', result)
+            })
         }
         messenger.listen('askTop', ()=>{
             return 'ooooooooooooo'
