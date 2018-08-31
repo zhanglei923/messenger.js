@@ -9,7 +9,9 @@
             messenger.request('asklevel3', 11,22,true,[])
             messenger.request('asklevel1', 11,22,true,[])
         }
-    
+        messenger.listen('askTop', ()=>{
+            return 'ooooooooooooo'
+        })
     </script>
 
     <iframe id="frame1" src="./child-level1.html" ></iframe>

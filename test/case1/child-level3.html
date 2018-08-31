@@ -8,8 +8,12 @@
         messenger.listen('asklevel3', ()=>{
             return 'wwwwwwwwwwwwwww'
         })
+
+        var askTop = ()=>{
+            messenger.request('askTop', 3)
+        }
     </script>
-    <button onclick="call()">call</button>
+    <button onclick="askTop()">call</button>
 
 </body>
 </html>
