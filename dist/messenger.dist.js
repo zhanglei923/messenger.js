@@ -161,8 +161,10 @@ this._howMany=0,this._unwrap=!1,this._initialized=!1}function o(t,e){if((0|e)!==
                         }, '*');
                     }
                 }
-            }, 2000)
-            
+            }, 2000);
+        }else{
+            //转发
+
         }
     }
     window.messenger.listen = function(eventName, callback){

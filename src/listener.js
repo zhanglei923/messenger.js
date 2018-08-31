@@ -35,8 +35,10 @@
                         }, '*');
                     }
                 }
-            }, 2000)
-            
+            }, 2000);
+        }else{
+            //转发
+
         }
     }
     window.messenger.listen = function(eventName, callback){
