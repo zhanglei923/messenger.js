@@ -3,7 +3,12 @@
 <head>
     <script src="../../dist/messenger.dist.js" ></script>
 </head>
-<body>
+<body>level1
+        <script type="text/javascript">
+            messenger.listen('asklevel1', ()=>{
+                return 'bar'
+            })
+        </script>
     <iframe id="frame1" src="./child-level2.html" ></iframe>
 
 </body>

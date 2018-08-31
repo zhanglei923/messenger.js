@@ -26,13 +26,13 @@
         },
         request: function (){
             var me = this;
-            var args = [];
             var eventName = arguments[0];
-            var responseToken = 'messenger-'+generateToken();
-            var iframelist = me.getTargetWindows();
+            var args = [];
             for(var i = 1; i < arguments.length; i++){
                 args.push(arguments[i]);
             }
+            var responseToken = 'messenger-'+generateToken();
+            var iframelist = me.getTargetWindows();
             for(var i = 0; i < iframelist.length; i++){
                 var iframe = iframelist[i]
                 if(iframe.postMessage){
