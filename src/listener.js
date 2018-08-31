@@ -19,17 +19,18 @@
             var result = fn.apply(window, args)
             console.log('received:', eventName, args, responseToken, result)
             window.setTimeout(()=>{
-                var iframelist = window.messenger.getTargetWindows();
-                console.log(iframelist.length)
-                for(var i = 0; i < iframelist.length; i++){
-                    var iframe = iframelist[i]
-                    if(iframe.postMessage){
+                var windows = window.messenger.getTargetWindows();
+                console.log(windows.length)
+                for(var i = 0; i < windows.length; i++){
+                    var iframe = windows[i]
+                    if(iframe.win.postMessage){
                         console.log('send response:', eventName, responseToken, iframe)
-                        iframe.postMessage({
+                        iframe.win.postMessage({
                             messengerjs:{
                                 isResp: true,                                
                                 responseToken,
-                                result
+                                result,
+                                is: iframe.is
                             }
                         }, '*');
                     }

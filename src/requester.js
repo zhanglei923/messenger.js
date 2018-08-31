@@ -11,11 +11,24 @@
     window.messenger = {
         thisPageId,
         getTargetWindows: function(){
-            var iframelist = [window.parent];
-            if(window !== window.parent) iframelist.push(window);
+            var iframelist = [];//[window.parent];
+            iframelist.push({
+                                is: 'self',
+                                win:window
+                            });
+            if(window !== window.parent) {
+                iframelist.push({
+                                    is: 'parent',
+                                    win: window.parent
+                                });
+
+            }
             var iframes = document.getElementsByTagName('iframe');
             for(var i = 0; i < iframes.length; i++){
-                iframelist.push(iframes[i].contentWindow)
+                iframelist.push({
+                    is: 'child',
+                    win: iframes[i].contentWindow
+                })
             }
             return iframelist;
         },
@@ -32,18 +45,19 @@
                 args.push(arguments[i]);
             }
             var responseToken = 'messenger-'+generateToken();
-            var iframelist = me.getTargetWindows();
-            for(var i = 0; i < iframelist.length; i++){
-                var iframe = iframelist[i]
-                if(iframe.postMessage){
+            var windows = me.getTargetWindows();
+            for(var i = 0; i < windows.length; i++){
+                var iframe = windows[i];
+                if(iframe.win.postMessage){
                     console.log('req:', eventName, responseToken, iframe)
-                    iframe.postMessage({
+                    iframe.win.postMessage({
                         messengerjs:{
                             isReq: true,//表明是request
                             eventName,//请求的名字
                             args,//本次请求的参数
                             responseToken,//本次请求的token，一次性
-                            thisPageId //发起请求的页面id
+                            thisPageId, //发起请求的页面id
+                            is: iframe.is
                         }
                     }, _currentTargetHost);
                 }
