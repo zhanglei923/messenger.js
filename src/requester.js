@@ -1,14 +1,15 @@
 //send
 (()=>{
+    var generateToken = function(){
+        var time = (Math.random()*1.7+'') +'-'+ 2.3 * (new Date())
+        return time.replace(/\./ig,'');
+    }
     var _currentTarget = window.parent;
     var _currentTargetHost = '*';
     var _waitingPromiseMap = {};
-    var _currentResult;
-    var generateToken = function(){
-        var time = (Math.random()*1.7+'') +'-'+ 2.3 * (new Date())
-        return 'messenger-'+''+time.replace(/\./ig,'');
-    }
+    var thisPageId = 'page-'+generateToken();
     window.messenger = {
+        thisPageId,
         getTargetWindows: function(){
             var iframelist = [window.parent];
             if(window !== window.parent) iframelist.push(window);
@@ -27,7 +28,7 @@
             var me = this;
             var args = [];
             var eventName = arguments[0];
-            var responseToken = generateToken();
+            var responseToken = 'messenger-'+generateToken();
             var iframelist = me.getTargetWindows();
             for(var i = 1; i < arguments.length; i++){
                 args.push(arguments[i]);
@@ -38,10 +39,11 @@
                     console.log('req:', eventName, responseToken, iframe)
                     iframe.postMessage({
                         messengerjs:{
-                            isReq: true,
-                            eventName,
-                            args,
-                            responseToken
+                            isReq: true,//表明是request
+                            eventName,//请求的名字
+                            args,//本次请求的参数
+                            responseToken,//本次请求的token，一次性
+                            thisPageId //发起请求的页面id
                         }
                     }, _currentTargetHost);
                 }
