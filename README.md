@@ -13,8 +13,7 @@ MIT: [http://www.opensource.org/licenses/mit-license.php](http://www.opensource.
 # API
 
 ```javascript
-//In pageA, emit one request event.
-//In this example we need to ask summation for given numbers.
+//In pageA, we need to ask summation for two given numbers.
 //Let's name this event as "ask_for_sum", and emit this event and two inputs.
 //if any page is listening this event and sent result back, you will receive it in method then():
 messenger.request('ask_for_sum', 2, 3).then((result)=>{
