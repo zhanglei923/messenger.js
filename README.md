@@ -43,6 +43,12 @@ messenger.listen('ask_for_sum', (num1, num2)=>{
 
 ```
 
+```javascript
+//others
+messenger.stopListen('ask_for_sum');//stop listen
+
+```
+
 # License
 MIT: [http://www.opensource.org/licenses/mit-license.php](http://www.opensource.org/licenses/mit-license.php)
 
