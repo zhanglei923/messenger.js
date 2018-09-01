@@ -2,7 +2,7 @@
 (()=>{
     var _listeningEvents = {}
     var handleRequest = function (data) {
-        console.log('on msg', window.location.href, data)
+        //console.log('on msg', window.location.href, data)
         var data = data.data;
         if(data.messengerjs /**&& data.messengerjs.isReq **/){
             process(data.messengerjs)
@@ -15,19 +15,20 @@
         var responseToken = data.responseToken;
         
         var fn = _listeningEvents[eventName]
-        console.log('process', !!fn, window.location.href)
+        //console.log('process', !!fn, window.location.href)
         if(fn && data.isReq){
             var result = fn.apply(window, args)
-            console.log('i-can-process-this-request:', eventName, args, responseToken, result)
+            //console.log('i-can-process-this-request:', eventName, args, responseToken, result)
             window.setTimeout(()=>{
                 var windows = window.messenger.getTargetWindows();
                 for(var i = 0; i < windows.length; i++){
                     var iframe = windows[i]
                     if(iframe.win.postMessage){
-                        console.log('send response:', eventName, responseToken, iframe)
+                        //console.log('send response:', eventName, responseToken, iframe)
                         iframe.win.postMessage({
                             messengerjs:{
-                                isResp: true,                                
+                                isResp: true,      
+                                responsePageId: messenger.thisPageId,                          
                                 responseToken,
                                 result,
                                 from: iframe.from
@@ -47,7 +48,7 @@
             }
         }
         if(data.from === 'child'){//继续向parent传播
-            console.log('from child', window.location.href)
+            //console.log('from child', window.location.href)
             if(window !== parent){
                 data.from = 'child';
                 window.parent.postMessage({messengerjs:data},'*');

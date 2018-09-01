@@ -59,7 +59,7 @@
                             eventName,//请求的名字
                             args,//本次请求的参数
                             responseToken,//本次请求的token，一次性
-                            thisPageId, //发起请求的页面id
+                            requestPageId: thisPageId, //发起请求的页面id
                             from: iframe.from
                         }
                     }, _currentTargetHost);
