@@ -167,7 +167,7 @@ this._howMany=0,this._unwrap=!1,this._initialized=!1}function o(t,e){if((0|e)!==
                         }, '*');
                     }
                 }
-            }, 2000);
+            }, 0);
         }
         //转发
         if(data.from === 'parent'){//继续向child传播

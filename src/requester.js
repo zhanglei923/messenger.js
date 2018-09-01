@@ -54,7 +54,7 @@
             for(var i = 0; i < windows.length; i++){
                 var iframe = windows[i];
                 if(iframe.win.postMessage){
-                    console.log('req:', eventName, responseToken, iframe)
+                    console.log('sent-req:', eventName, responseToken, iframe)
                     iframe.win.postMessage({
                         messengerjs:{
                             isReq: true,//表明是request
