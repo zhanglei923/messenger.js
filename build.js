@@ -15,8 +15,17 @@ var clean = (content) =>{
     content = content.replace(/console\.log/g, '//')
     return content;
 }
-
-fs.writeFileSync(pathUtil.resolve(distPath, 'messenger.dist.js'), `${bluebird}\n${content}`); 
+let thisyear = (new Date()).getFullYear();
+let finalcontent = `
+/* 
+* Messenger.js
+* The MIT License (MIT)
+* Copyright (c) 2013-${thisyear} ZhangLei (zhanglei923@gmail.com)
+* https://github.com/zhanglei923/messenger.js
+*/
+(()=>{${content}})();
+`
+fs.writeFileSync(pathUtil.resolve(distPath, 'messenger.dist.js'), finalcontent); 
 //fs.writeFileSync(pathUtil.resolve(distPath, 'postmessage-plus.cmd.js'), clean(content_cmd)); 
 if(fs.existsSync(npmPath)){
 	fs.writeFileSync(pathUtil.resolve(npmPath, 'postmessage-plus.module.js'), clean(content_module));

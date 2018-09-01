@@ -1,4 +1,4 @@
-//send
+//request
 (()=>{
     var generateToken = function(){
         var time = (Math.random()*1.7+'') +'-'+ 2.3 * (new Date())
@@ -67,12 +67,7 @@
                     }, _currentTargetHost);
                 }
             }
-            var promise = new Promise(function(resolve, reject) {
-
-            });
-            _waitingPromiseMap[responseToken] = {
-                promise: promise
-            };
+            _waitingPromiseMap[responseToken] = {};
             return {
                 then: (cb)=>{
                     _waitingPromiseMap[responseToken].cb = cb;
