@@ -16,6 +16,9 @@
         messenger.listen('askTop', ()=>{
             return 'ooooooooooooo'
         })
+        messenger.listen('askfromlevel2', (num)=>{
+            return num*2
+        })
     </script>
 
     <iframe id="frame1" src="./child-level1.html" ></iframe>

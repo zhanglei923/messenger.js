@@ -9,7 +9,9 @@
     var _waitingPromiseMap = {};
     var thisPageId = 'page-'+generateToken();
     window.messenger = {
-        thisPageId,
+        getPageId: function(){
+            return thisPageId;
+        },
         getTargetWindows: function(){
             var iframelist = [];//[window.parent];
             iframelist.push({

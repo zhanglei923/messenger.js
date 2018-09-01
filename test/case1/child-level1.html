@@ -8,6 +8,10 @@
             messenger.listen('asklevel1', ()=>{
                 return 'bar'
             })
+            
+            messenger.listen('askfromlevel2', (num)=>{
+                return num*4
+            })
         </script>
     <iframe id="frame1" src="./child-level2.html" ></iframe>
 

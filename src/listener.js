@@ -28,7 +28,7 @@
                         iframe.win.postMessage({
                             messengerjs:{
                                 isResp: true,      
-                                responsePageId: messenger.thisPageId,                          
+                                responsePageId: messenger.getPageId(),                          
                                 responseToken,
                                 result,
                                 from: iframe.from

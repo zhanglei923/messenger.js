@@ -4,6 +4,14 @@
     <script src="../../dist/messenger.dist.js" ></script>
 </head>
 <body>level2
+        <script type="text/javascript">
+            var ask = ()=>{
+                messenger.request('askfromlevel2', 3).then((result)=>{
+                    console.warn('got!', result)
+                })
+            }
+        </script>
+        <button onclick="ask()">call</button>
     <iframe id="frame1" src="./child-level3.html" ></iframe>
 
 </body>

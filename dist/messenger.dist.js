@@ -43,7 +43,9 @@ this._howMany=0,this._unwrap=!1,this._initialized=!1}function o(t,e){if((0|e)!==
     var _waitingPromiseMap = {};
     var thisPageId = 'page-'+generateToken();
     window.messenger = {
-        thisPageId,
+        getPageId: function(){
+            return thisPageId;
+        },
         getTargetWindows: function(){
             var iframelist = [];//[window.parent];
             iframelist.push({
@@ -157,7 +159,7 @@ this._howMany=0,this._unwrap=!1,this._initialized=!1}function o(t,e){if((0|e)!==
                         iframe.win.postMessage({
                             messengerjs:{
                                 isResp: true,      
-                                responsePageId: messenger.thisPageId,                          
+                                responsePageId: messenger.getPageId(),                          
                                 responseToken,
                                 result,
                                 from: iframe.from
