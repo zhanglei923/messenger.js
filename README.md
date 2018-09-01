@@ -1,6 +1,6 @@
 # Messenger.js
 
-A New Generation Browser Side Event-Bus.
+A new generation postMessage based browser side Event-Bus.
 
 # License
 MIT: [http://www.opensource.org/licenses/mit-license.php](http://www.opensource.org/licenses/mit-license.php)
@@ -13,24 +13,25 @@ MIT: [http://www.opensource.org/licenses/mit-license.php](http://www.opensource.
 # API
 
 ```javascript
-//In pageA, sent a request event, e.g: ask for sum numbers
+//In pageA, emit one request event.
+//e.g. ask for sum numbers, let's name this event as "ask_for_sum":
 messenger.request('ask_for_sum', 2, 3).then((result)=>{
-     console.warn('sum:', result)
+     console.log('sum:', result)
 })
 
 ```
 
 ```javascript
-//In pageB, subscribe this event and sent response back:
+//In pageB, subscribe particular event. In this case, the event name will be "ask_for_sum":
 messenger.listen('ask_for_sum', (num1, num2)=>{
-   return num1+num2;
+   return num1+num2;//sent result back
 });
 
 //or, it is also ok to return a promise instance for async scenarios
 messenger.listen('ask_for_sum', (num1, num2)=>{
     var promise = new Promise((resolve, reject)=>{
-        setTimeout(()=>{//simulate async
-            resolve(num1+num2);
+        setTimeout(()=>{//async process
+            resolve(num1+num2);//sent result back
         }, 2000)
     })
     return promise;
@@ -39,7 +40,7 @@ messenger.listen('ask_for_sum', (num1, num2)=>{
 ```
 
 ```javascript
-//Finally, in pageA you will get console print below:
+//Finally, in pageA you will get a console output below:
 'sum:' 5
 
 ```
