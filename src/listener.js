@@ -65,6 +65,9 @@
     }
     window.messenger.listen = function(eventName, callback){
         _listeningEvents[eventName] = callback;
+    };    
+    window.messenger.stopListen = function(eventName){
+        delete _listeningEvents[eventName];
     };
     if (window.addEventListener) {
         window.addEventListener("message", handleRequest);
