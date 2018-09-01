@@ -14,7 +14,9 @@ MIT: [http://www.opensource.org/licenses/mit-license.php](http://www.opensource.
 
 ```javascript
 //In pageA, emit one request event.
-//e.g. ask for sum numbers, let's name this event as "ask_for_sum":
+//In this example we need to ask summation for given numbers.
+//Let's name this event as "ask_for_sum", and emit this event and two inputs.
+//if any page is listening this event and sent result back, you will receive it in method then():
 messenger.request('ask_for_sum', 2, 3).then((result)=>{
      console.log('sum:', result)
 })
@@ -22,16 +24,16 @@ messenger.request('ask_for_sum', 2, 3).then((result)=>{
 ```
 
 ```javascript
-//In pageB, subscribe particular event. In this case, the event name will be "ask_for_sum":
+//In pageB, listen this particular event, do calculate and return result:
 messenger.listen('ask_for_sum', (num1, num2)=>{
-   return num1+num2;//sent result back
+   return num1+num2;//sent result back to pageA
 });
 
 //or, it is also ok to return a promise instance for async scenarios
 messenger.listen('ask_for_sum', (num1, num2)=>{
     var promise = new Promise((resolve, reject)=>{
         setTimeout(()=>{//async process
-            resolve(num1+num2);//sent result back
+            resolve(num1+num2);//sent result back to pageA
         }, 2000)
     })
     return promise;
