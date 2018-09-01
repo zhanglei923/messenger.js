@@ -1,6 +1,6 @@
 # Messenger.js
 
-A new generation postMessage based browser side Event-Bus.
+A new generation 'postMessage' based high performance event-bus for browser.
 
 # License
 MIT: [http://www.opensource.org/licenses/mit-license.php](http://www.opensource.org/licenses/mit-license.php)
