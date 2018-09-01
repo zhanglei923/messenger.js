@@ -10,7 +10,12 @@
             })
             
             messenger.listen('askfromlevel2', (num)=>{
-                return num*4
+                var promise = new Promise((resolve, reject)=>{
+                    setTimeout(()=>{                        
+                        resolve(num*4);
+                    }, 2000)
+                })
+                return promise;
             })
         </script>
     <iframe id="frame1" src="./child-level2.html" ></iframe>

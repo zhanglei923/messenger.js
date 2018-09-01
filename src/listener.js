@@ -8,6 +8,25 @@
             process(data.messengerjs)
         }
     }
+    var doResponse = (responseToken, result)=>{
+        //console.log('i-can-process-this-request:', eventName, args, responseToken, result)
+        var windows = window.messenger.getTargetWindows();
+        for(var i = 0; i < windows.length; i++){
+            var iframe = windows[i]
+            if(iframe.win.postMessage){
+                //console.log('send response:', eventName, responseToken, iframe)
+                iframe.win.postMessage({
+                    messengerjs:{
+                        isResp: true,      
+                        responsePageId: messenger.getPageId(),                          
+                        responseToken,
+                        result,
+                        from: iframe.from
+                    }
+                }, '*');
+            }
+        }
+    }
     var process = function(data){
         //invoke
         var args = data.args;
@@ -18,25 +37,14 @@
         //console.log('process', !!fn, window.location.href)
         if(fn && data.isReq){
             var result = fn.apply(window, args)
-            //console.log('i-can-process-this-request:', eventName, args, responseToken, result)
-            window.setTimeout(()=>{
-                var windows = window.messenger.getTargetWindows();
-                for(var i = 0; i < windows.length; i++){
-                    var iframe = windows[i]
-                    if(iframe.win.postMessage){
-                        //console.log('send response:', eventName, responseToken, iframe)
-                        iframe.win.postMessage({
-                            messengerjs:{
-                                isResp: true,      
-                                responsePageId: messenger.getPageId(),                          
-                                responseToken,
-                                result,
-                                from: iframe.from
-                            }
-                        }, '*');
-                    }
-                }
-            }, 0);
+            if(result && typeof result.then === 'function'){
+                result.then((data)=>{
+                    doResponse(responseToken, data)
+                })
+            }else{
+                doResponse(responseToken, result)
+            }
+            
         }
         //转发
         if(data.from === 'parent'){//继续向child传播
