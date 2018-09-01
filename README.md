@@ -2,9 +2,6 @@
 
 A new generation 'postMessage' based high performance event-bus for browser.
 
-# License
-MIT: [http://www.opensource.org/licenses/mit-license.php](http://www.opensource.org/licenses/mit-license.php)
-
 # Install
 ```html
 <script src="./messenger.dist.js" ></script>
@@ -45,3 +42,7 @@ messenger.listen('ask_for_sum', (num1, num2)=>{
 'sum:' 5
 
 ```
+
+# License
+MIT: [http://www.opensource.org/licenses/mit-license.php](http://www.opensource.org/licenses/mit-license.php)
+
