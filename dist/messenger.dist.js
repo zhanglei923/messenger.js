@@ -88,7 +88,7 @@ this._howMany=0,this._unwrap=!1,this._initialized=!1}function o(t,e){if((0|e)!==
             for(var i = 0; i < windows.length; i++){
                 var iframe = windows[i];
                 if(iframe.win.postMessage){
-                    console.log('req:', eventName, responseToken, iframe)
+                    console.log('sent-req:', eventName, responseToken, iframe)
                     iframe.win.postMessage({
                         messengerjs:{
                             isReq: true,//表明是request
@@ -107,20 +107,24 @@ this._howMany=0,this._unwrap=!1,this._initialized=!1}function o(t,e){if((0|e)!==
             _waitingPromiseMap[responseToken] = {
                 promise: promise
             };
-            return promise;
+            return {
+                then: (cb)=>{
+                    _waitingPromiseMap[responseToken].cb = cb;
+                }
+            };
         }
     }
     var handleResponse = function(data){
         //console.log('on msg', window.location.href, data)
         var data = data.data;
         if(data.messengerjs && data.messengerjs.isResp && _waitingPromiseMap[data.messengerjs.responseToken]){
-            process(data.messengerjs)
+            process(data.messengerjs.responseToken, data.messengerjs)
         }
     };
-    var process = (data)=>{
+    var process = (responseToken, data)=>{
         var result = data.result;
-        console.warn('got response', window.location.href, result)
-
+        //console.warn('got response', window.location.href, result)
+        _waitingPromiseMap[responseToken].cb(result)
     };
     if (window.addEventListener) {
         window.addEventListener("message", handleResponse);

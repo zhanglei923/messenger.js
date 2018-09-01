@@ -73,20 +73,24 @@
             _waitingPromiseMap[responseToken] = {
                 promise: promise
             };
-            return promise;
+            return {
+                then: (cb)=>{
+                    _waitingPromiseMap[responseToken].cb = cb;
+                }
+            };
         }
     }
     var handleResponse = function(data){
         //console.log('on msg', window.location.href, data)
         var data = data.data;
         if(data.messengerjs && data.messengerjs.isResp && _waitingPromiseMap[data.messengerjs.responseToken]){
-            process(data.messengerjs)
+            process(data.messengerjs.responseToken, data.messengerjs)
         }
     };
-    var process = (data)=>{
+    var process = (responseToken, data)=>{
         var result = data.result;
-        console.warn('got response', window.location.href, result)
-
+        //console.warn('got response', window.location.href, result)
+        _waitingPromiseMap[responseToken].cb(result)
     };
     if (window.addEventListener) {
         window.addEventListener("message", handleResponse);
