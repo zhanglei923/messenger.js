@@ -1,6 +1,6 @@
 # Messenger.js
 
-A new generation 'postMessage' based high performance event-bus for browser.
+A 'postMessage' based browser side event-bus.
 
 # Install
 ```html
