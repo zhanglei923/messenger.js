@@ -22,10 +22,19 @@ let finalcontent = `
 * The MIT License (MIT)
 * Copyright (c) 2013-${thisyear} ZhangLei (zhanglei923@gmail.com)
 * https://github.com/zhanglei923/messenger.js
-*/
-(()=>{${content}})();
-`
+*/(()=>{
+${content};
+window.messenger=messenger;
+})();
+`;
+let finalcontentcmd = `
+define(function (require, exports, module) {
+    ${content}
+    module.exports = messenger;
+})
+`;
 fs.writeFileSync(pathUtil.resolve(distPath, 'messenger.dist.js'), finalcontent); 
+fs.writeFileSync(pathUtil.resolve(distPath, 'messenger.cmd.js'), finalcontentcmd); 
 //fs.writeFileSync(pathUtil.resolve(distPath, 'postmessage-plus.cmd.js'), clean(content_cmd)); 
 if(fs.existsSync(npmPath)){
 	fs.writeFileSync(pathUtil.resolve(npmPath, 'postmessage-plus.module.js'), clean(content_module));

@@ -1,11 +1,6 @@
 
-/* 
-* Messenger.js
-* The MIT License (MIT)
-* Copyright (c) 2013-2018 ZhangLei (zhanglei923@gmail.com)
-* https://github.com/zhanglei923/messenger.js
-*/(()=>{
-let messenger = {};
+define(function (require, exports, module) {
+    let messenger = {};
 window.messenger=messenger;
 //request
 (()=>{
@@ -180,6 +175,6 @@ window.messenger=messenger;
         window.attachEvent("onmessage", handleRequest);
     }
     console.log('listening...')
-})();;
-window.messenger=messenger;
 })();
+    module.exports = messenger;
+})
