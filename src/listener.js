@@ -1,5 +1,5 @@
 //listener
-(()=>{
+((messenger)=>{
     var _listeningEvents = {}
     var handleRequest = function (data) {
         //console.log('on msg', window.location.href, data)
@@ -10,7 +10,7 @@
     }
     var doResponse = (responseToken, result)=>{
         //console.log('i-can-process-this-request:', eventName, args, responseToken, result)
-        var windows = window.messenger.getTargetWindows();
+        var windows = messenger.getTargetWindows();
         for(var i = 0; i < windows.length; i++){
             var iframe = windows[i]
             if(iframe.win.postMessage){
@@ -63,10 +63,10 @@
             }
         }
     }
-    window.messenger.listen = function(eventName, callback){
+    messenger.listen = function(eventName, callback){
         _listeningEvents[eventName] = callback;
     };    
-    window.messenger.stopListen = function(eventName){
+    messenger.stopListen = function(eventName){
         delete _listeningEvents[eventName];
     };
     if (window.addEventListener) {
@@ -75,4 +75,4 @@
         window.attachEvent("onmessage", handleRequest);
     }
     console.log('listening...')
-})();
+})(messenger);

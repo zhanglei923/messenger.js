@@ -1,5 +1,5 @@
 //request
-(()=>{
+((messenger)=>{
     var generateToken = function(){
         var time = (Math.random()*1.7+'') +'-'+ 2.3 * (new Date())
         return time.replace(/\./ig,'');
@@ -40,7 +40,7 @@
         messenger.setTarget= function(target){
             _currentTarget = target;
             if(_currentTarget.contentWindow) _currentTarget = _currentTarget.contentWindow;
-            return window.messenger;
+            return messenger;
         }
         messenger.request= function (){
             var me = this;
@@ -93,4 +93,4 @@
         window.attachEvent("onmessage", handleResponse);
     }
     
-})();
+})(messenger);
