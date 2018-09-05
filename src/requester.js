@@ -8,11 +8,11 @@
     var _currentTargetHost = '*';
     var _waitingPromiseMap = {};
     var thisPageId = 'page-'+generateToken();
-    window.messenger = {
-        getPageId: function(){
+
+    messenger.getPageId= function(){
             return thisPageId;
-        },
-        getTargetWindows: function(){
+        }
+    messenger.getTargetWindows= function(){
             var iframelist = [];//[window.parent];
             iframelist.push({
                                 is: 'self',
@@ -36,13 +36,13 @@
                 })
             }
             return iframelist;
-        },
-        setTarget: function(target){
+        }
+        messenger.setTarget= function(target){
             _currentTarget = target;
             if(_currentTarget.contentWindow) _currentTarget = _currentTarget.contentWindow;
             return window.messenger;
-        },
-        request: function (){
+        }
+        messenger.request= function (){
             var me = this;
             var eventName = arguments[0];
             var args = [];
@@ -74,7 +74,7 @@
                 }
             };
         }
-    }
+    
     var handleResponse = function(data){
         //console.log('on msg', window.location.href, data)
         var data = data.data;
