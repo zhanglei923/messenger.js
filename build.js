@@ -1,5 +1,6 @@
 let fs = require('fs');
 let pathUtil = require('path');
+var compressor = require('node-minify');
 
 let libPath = pathUtil.resolve(__dirname, './lib')
 let srcPath = pathUtil.resolve(__dirname, './src/')
@@ -16,29 +17,42 @@ var clean = (content) =>{
     return content;
 }
 let thisyear = (new Date()).getFullYear();
-let finalcontent = `
-/* 
-* Messenger.js
-* The MIT License (MIT)
-* Copyright (c) 2013-${thisyear} ZhangLei (zhanglei923@gmail.com)
-* https://github.com/zhanglei923/messenger.js
-*/(()=>{
-${content};
-window.messenger=messenger;
-})();
-`;
-let finalcontentcmd = `
-define(function (require, exports, module) {
-    ${content}
+let path = 
+fs.writeFileSync(pathUtil.resolve(distPath, 'temp_src.js'), content); 
+var promise = compressor.minify({
+    compressor: 'gcc',
+    input: pathUtil.resolve(distPath, 'temp_src.js'),
+    output: pathUtil.resolve(distPath, 'temp_min.js'),
+    callback: function(err, min) {}
+});
+promise.then(function(min) {
+    let finalcontent = `
+    /* 
+    * Messenger.js
+    * The MIT License (MIT)
+    * Copyright (c) 2013-${thisyear} ZhangLei (zhanglei923@gmail.com)
+    * https://github.com/zhanglei923/messenger.js
+    */(()=>{${min};window.messenger=messenger;})();`;
+    let finalcontentcmd = `
+   define(function (require, exports, module) {
+    /* 
+    * Messenger.js
+    * The MIT License (MIT)
+    * Copyright (c) 2013-${thisyear} ZhangLei (zhanglei923@gmail.com)
+    * https://github.com/zhanglei923/messenger.js
+    */
+    ${min}
     module.exports = messenger;
-})
-`;
-fs.writeFileSync(pathUtil.resolve(distPath, 'messenger.dist.js'), finalcontent); 
-fs.writeFileSync(pathUtil.resolve(distPath, 'messenger.cmd.js'), finalcontentcmd); 
-//fs.writeFileSync(pathUtil.resolve(distPath, 'postmessage-plus.cmd.js'), clean(content_cmd)); 
-if(fs.existsSync(npmPath)){
-	fs.writeFileSync(pathUtil.resolve(npmPath, 'postmessage-plus.module.js'), clean(content_module));
-}else{
-	console.log('can not output to:', npmPath)
-}
-console.log('done.')
+    })`;
+    fs.writeFileSync(pathUtil.resolve(distPath, 'messenger.dist.js'), finalcontent); 
+    fs.writeFileSync(pathUtil.resolve(distPath, 'messenger.cmd.js'), finalcontentcmd); 
+    //fs.writeFileSync(pathUtil.resolve(distPath, 'postmessage-plus.cmd.js'), clean(content_cmd)); 
+    if(fs.existsSync(npmPath)){
+        fs.writeFileSync(pathUtil.resolve(npmPath, 'postmessage-plus.module.js'), clean(content_module));
+    }else{
+        console.log('can not output to:', npmPath)
+    }
+    console.log('done.')
+
+
+});
