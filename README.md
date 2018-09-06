@@ -48,7 +48,7 @@ messenger.subscribe('ask_for_sum', (num1, num2)=>{
 
 ```javascript
 //stop subscribe
-messenger.stopListen('ask_for_sum');//stop listen
+messenger.stopSubscribe('ask_for_sum');//stop listen
 
 ```
 
