@@ -26,11 +26,10 @@ let license =
 * Copyright (c) 2013-${thisyear} ZhangLei (zhanglei923@gmail.com)
 * https://github.com/zhanglei923/messenger.js
 */`
-let path = 
-fs.writeFileSync(pathUtil.resolve(distPath, 'messenger.debug.js'), license+'\n'+content); 
+fs.writeFileSync(pathUtil.resolve(distPath, 'messenger.src.js'), license+'\n'+content); 
 var promise = compressor.minify({
     compressor: 'gcc',
-    input: pathUtil.resolve(distPath, 'messenger.debug.js'),
+    input: pathUtil.resolve(distPath, 'messenger.src.js'),
     output: pathUtil.resolve(distPath, 'temp_min.js'),
     callback: function(err, min) {}
 });
