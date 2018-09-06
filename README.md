@@ -2,12 +2,14 @@
 
 A 'postMessage' based cross iframe/domain event-bus.
 
+# Browser Support
+
+IE9+
+
 # Install
 ```html
 <script src="./messenger.dist.js" ></script>
 ```
-# Browser Support
-IE9+
 
 # API
 
