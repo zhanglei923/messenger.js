@@ -1,5 +1,6 @@
 /* 
-* Messenger.js
+* Messenger.js 
+* v0.6.0
 * The MIT License (MIT)
 * Copyright (c) 2013-2018 ZhangLei (zhanglei923@gmail.com)
 * https://github.com/zhanglei923/messenger.js

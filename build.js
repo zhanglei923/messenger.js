@@ -17,9 +17,11 @@ let content2 = fs.readFileSync(pathUtil.resolve(srcPath, 'listener.js'),'utf8');
 content = content+'\n'+content1+'\n'+content2;
 content = es6_downgrade_util.update(content)
 let thisyear = (new Date()).getFullYear();
+let version = 'v0.6.0'
 let license = 
 `/* 
-* Messenger.js
+* Messenger.js 
+* ${version}
 * The MIT License (MIT)
 * Copyright (c) 2013-${thisyear} ZhangLei (zhanglei923@gmail.com)
 * https://github.com/zhanglei923/messenger.js
@@ -44,11 +46,11 @@ define(function (require, exports, module) {
 ${min}
 module.exports = messenger;
 })`;
-    fs.writeFileSync(pathUtil.resolve(distPath, 'messenger.dist.js'), mincontent); 
+    fs.writeFileSync(pathUtil.resolve(distPath, 'messenger.min.js'), mincontent); 
     fs.writeFileSync(pathUtil.resolve(distPath, 'messenger.cmd.js'), mincontentcmd); 
     //fs.writeFileSync(pathUtil.resolve(distPath, 'postmessage-plus.cmd.js'), clean(content_cmd)); 
     if(fs.existsSync(npmPath)){
-        fs.writeFileSync(pathUtil.resolve(npmPath, 'messenger.dist.js'), mincontent);
+        fs.writeFileSync(pathUtil.resolve(npmPath, 'messenger.min.js'), mincontent);
     }else{
         console.log('can not output to:', npmPath)
     }
