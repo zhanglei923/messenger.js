@@ -17,35 +17,32 @@ var clean = (content) =>{
     return content;
 }
 let thisyear = (new Date()).getFullYear();
+let license = 
+`/* 
+* Messenger.js
+* The MIT License (MIT)
+* Copyright (c) 2013-${thisyear} ZhangLei (zhanglei923@gmail.com)
+* https://github.com/zhanglei923/messenger.js
+*/`
 let path = 
-fs.writeFileSync(pathUtil.resolve(distPath, 'temp_src.js'), content); 
+fs.writeFileSync(pathUtil.resolve(distPath, 'messenger.debug.js'), license+'\n'+content); 
 var promise = compressor.minify({
     compressor: 'gcc',
-    input: pathUtil.resolve(distPath, 'temp_src.js'),
+    input: pathUtil.resolve(distPath, 'messenger.debug.js'),
     output: pathUtil.resolve(distPath, 'temp_min.js'),
     callback: function(err, min) {}
 });
 promise.then(function(min) {
-    let finalcontent = `
-    /* 
-    * Messenger.js
-    * The MIT License (MIT)
-    * Copyright (c) 2013-${thisyear} ZhangLei (zhanglei923@gmail.com)
-    * https://github.com/zhanglei923/messenger.js
-    */(()=>{${min};window.messenger=messenger;})();`;
-    let finalcontentcmd = `
-   define(function (require, exports, module) {
-    /* 
-    * Messenger.js
-    * The MIT License (MIT)
-    * Copyright (c) 2013-${thisyear} ZhangLei (zhanglei923@gmail.com)
-    * https://github.com/zhanglei923/messenger.js
-    */
-    ${min}
-    module.exports = messenger;
-    })`;
-    fs.writeFileSync(pathUtil.resolve(distPath, 'messenger.dist.js'), finalcontent); 
-    fs.writeFileSync(pathUtil.resolve(distPath, 'messenger.cmd.js'), finalcontentcmd); 
+    let mincontent = 
+        `${license}(()=>{${min};window.messenger=messenger;})();`;
+    let mincontentcmd = 
+`${license}
+define(function (require, exports, module) {
+${min}
+module.exports = messenger;
+})`;
+    fs.writeFileSync(pathUtil.resolve(distPath, 'messenger.dist.js'), mincontent); 
+    fs.writeFileSync(pathUtil.resolve(distPath, 'messenger.cmd.js'), mincontentcmd); 
     //fs.writeFileSync(pathUtil.resolve(distPath, 'postmessage-plus.cmd.js'), clean(content_cmd)); 
     if(fs.existsSync(npmPath)){
         fs.writeFileSync(pathUtil.resolve(npmPath, 'postmessage-plus.module.js'), clean(content_module));

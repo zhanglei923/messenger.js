@@ -1,10 +1,9 @@
-
-    /* 
-    * Messenger.js
-    * The MIT License (MIT)
-    * Copyright (c) 2013-2018 ZhangLei (zhanglei923@gmail.com)
-    * https://github.com/zhanglei923/messenger.js
-    */(()=>{var messenger={};
+/* 
+* Messenger.js
+* The MIT License (MIT)
+* Copyright (c) 2013-2018 ZhangLei (zhanglei923@gmail.com)
+* https://github.com/zhanglei923/messenger.js
+*/(()=>{var messenger={};
 (function(d){var g=function(){return(1.7*Math.random()+"-"+2.3*new Date).replace(/\./ig,"")},e=window.parent,f={},h="page-"+g();d.getPageId=function(){return h};d.getTargetWindows=function(){var a=[];a.push({is:"self",from:"self",win:window});window!==window.parent&&a.push({is:"parent",from:"child",win:window.parent});for(var b=document.getElementsByTagName("iframe"),c=0;c<b.length;c++)a.push({is:"child",from:"parent",win:b[c].contentWindow});return a};d.setTarget=function(a){e=a;e.contentWindow&&
 (e=e.contentWindow);return d};d.request=function(){for(var a=arguments[0],b=[],c=1;c<arguments.length;c++)b.push(arguments[c]);var d="messenger-"+g(),e=this.getTargetWindows();for(c=0;c<e.length;c++){var k=e[c];k.win.postMessage&&(console.log("sent-req:",a,d,k),k.win.postMessage({messengerjs:{isReq:!0,eventName:a,args:b,responseToken:d,requestPageId:h,from:k.from}},"*"))}f[d]={};return{then:function(a){f[d].cb=a}}};var b=function(a){a=a.data;a.messengerjs&&a.messengerjs.isResp&&f[a.messengerjs.responseToken]&&
 f[a.messengerjs.responseToken].cb(a.messengerjs.result)};window.addEventListener?window.addEventListener("message",b):window.attachEvent&&window.attachEvent("onmessage",b)})(messenger);
