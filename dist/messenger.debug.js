@@ -7,7 +7,6 @@
 'use strict';
 
 var messenger = {};
-var promise = new Promise()
 //request
 (function (messenger) {
     var generateToken = function generateToken() {
