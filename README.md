@@ -17,6 +17,15 @@ messenger.post('ask_for_sum', 2, 3).then((result)=>{
      console.log('sum:', result)
 })
 
+messenger.post('ask_for_sum', 2, 3).then((result, msgInfo)=>{
+     //print result
+     console.log('sum:', result)
+     //how many results returned
+     console.log('received result count: ', msgInfo.count)
+     //run stopReceive() to stop receiving back results
+     if(msgInfo.count >= 2)msgInfo.stopReceive();//stop receive
+})
+
 ```
 
 ```javascript
