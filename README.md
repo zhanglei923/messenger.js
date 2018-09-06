@@ -12,20 +12,20 @@ Browser Support is IE9+
 # API
 
 ```javascript
-//post an event request 'ask_for_sum' with two parameters 1 and 2, to see if someone is subscribing
+//Supose in pageA, you post an event named 'ask_for_sum' with two parameters 1 and 2, to see if someone is subscribing
 messenger.post('ask_for_sum', 1, 2).then((result)=>{
-     console.log('sum:', result)
-})
-
+     //if someone is subscribing to this event and post his response back, it should be received at here:
+     console.log('sum:', result)// sum: 3
+});
 ```
 
 ```javascript
-//In pageB, subscribe to this event, get two parameters, do addition and return result back:
+//below is an example of how to subscribe event, process and send result back:
 messenger.subscribe('ask_for_sum', (num1, num2)=>{
    return num1+num2;//sent result back to pageA
 });
 
-//or, it is also ok to return a promise instance for async scenarios
+//it is also ok to return a promise instance, for async scenarios
 messenger.subscribe('ask_for_sum', (num1, num2)=>{
     var promise = new Promise((resolve, reject)=>{
         setTimeout(()=>{//async process
@@ -38,16 +38,10 @@ messenger.subscribe('ask_for_sum', (num1, num2)=>{
 ```
 
 ```javascript
-//Finally, you will get a console print below in pageA:
-sum: 3
-
-```
-
-```javascript
 //you can also do:
 messenger.stopSubscribe('ask_for_sum');//stop subscribe
 
-//use msgInfo.count and msgInfo.stopReceive to limit receives
+//use 'msgInfo' to count receives or terminate by run stopReceive()
 messenger.post('ask_for_sum', 1, 2).then((result, msgInfo)=>{    
      //print result     
      console.log('sum:', result);
