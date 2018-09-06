@@ -1,12 +1,10 @@
 # Messenger.js
 
 A 'postMessage' based cross iframe/domain event-bus.
-
-# Browser Support
-
-IE9+
+Browser Support is IE9+
 
 # Install
+
 ```html
 <script src="./messenger.dist.js" ></script>
 ```
@@ -54,6 +52,7 @@ messenger.stopSubscribe('ask_for_sum');//stop listen
 ```
 
 # License
+
 MIT: 
 
 [http://www.opensource.org/licenses/mit-license.php](http://www.opensource.org/licenses/mit-license.php)
