@@ -21,7 +21,7 @@ messenger.post('ask_for_sum', 1, 2).then((result)=>{
 ```
 
 ```javascript
-//below is an example of how to subscribe event, process and send result back:
+//below is the way to subscribe event and send result back:
 messenger.subscribe('ask_for_sum', (num1, num2)=>{
    return num1+num2;//sent result back to pageA
 });
