@@ -6,6 +6,9 @@ A 'postMessage' based browser side event-bus.
 ```html
 <script src="./messenger.dist.js" ></script>
 ```
+# Browser Support
+IE11+
+Will support IE9/10 soon...
 
 # API
 
