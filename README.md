@@ -38,17 +38,18 @@ messenger.listen('ask_for_sum', (num1, num2)=>{
 ```
 
 ```javascript
-//Finally, in pageA you will get a console output below:
+//Finally, you will get a console output below in pageA:
 'sum:' 5
 
 ```
 
 ```javascript
-//others
+//stop subscribe
 messenger.stopListen('ask_for_sum');//stop listen
 
 ```
 
 # License
-MIT: [http://www.opensource.org/licenses/mit-license.php](http://www.opensource.org/licenses/mit-license.php)
+MIT: 
+[http://www.opensource.org/licenses/mit-license.php](http://www.opensource.org/licenses/mit-license.php)
 
