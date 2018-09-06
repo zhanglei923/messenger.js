@@ -52,7 +52,7 @@ messenger.subscribe('ask_for_sum', (num1, num2)=>{
 
 ```javascript
 //Finally, you will get a console print below in pageA:
-'sum:' 5
+sum: 5
 
 ```
 
