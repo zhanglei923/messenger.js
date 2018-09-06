@@ -6,15 +6,15 @@
 <body>level3
     <script type="text/javascript">
     
-        messenger.listen('askfromlevel2', (num)=>{
+        messenger.subscribe('askfromlevel2', (num)=>{
             return num*3
         })
-        messenger.listen('asklevel3', ()=>{
+        messenger.subscribe('asklevel3', ()=>{
             return 'wwwwwwwwwwwwwww'
         })
 
         var askTop = ()=>{
-            messenger.request('askTop', 3).then((result)=>{
+            messenger.post('askTop', 3).then((result)=>{
                 console.warn('got!', result)
             })
         }

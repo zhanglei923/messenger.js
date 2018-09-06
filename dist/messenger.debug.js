@@ -51,7 +51,7 @@ new Promise(function (resolve, reject) {});
         if (_currentTarget.contentWindow) _currentTarget = _currentTarget.contentWindow;
         return messenger;
     };
-    messenger.request = function () {
+    messenger.post = function () {
         var me = this;
         var eventName = arguments[0];
         var args = [];
@@ -168,10 +168,10 @@ new Promise(function (resolve, reject) {});
             }
         }
     };
-    messenger.listen = function (eventName, callback) {
+    messenger.subscribe = function (eventName, callback) {
         _listeningEvents[eventName] = callback;
     };
-    messenger.stopListen = function (eventName) {
+    messenger.stopSubscribe = function (eventName) {
         delete _listeningEvents[eventName];
     };
     if (window.addEventListener) {

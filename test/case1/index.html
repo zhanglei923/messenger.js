@@ -6,26 +6,26 @@
 <body>
     <script>
         var callself=()=>{
-            messenger.request('askSelf', 5).then((result)=>{
+            messenger.post('askSelf', 5).then((result)=>{
                 console.warn('got-self!', result)
             })
         }
-        messenger.listen('askSelf', (num)=>{
+        messenger.subscribe('askSelf', (num)=>{
             return 'ooooo'+num
         })
         ////////////////////
         var call=()=>{
-            messenger.request('asklevel3', 11,22,true,[]).then((result)=>{
+            messenger.post('asklevel3', 11,22,true,[]).then((result)=>{
                 console.warn('got!', result)
             })
-            messenger.request('asklevel1', 11,22,true,[]).then((result)=>{
+            messenger.post('asklevel1', 11,22,true,[]).then((result)=>{
                 console.warn('got!', result)
             })
         }
-        messenger.listen('askTop', ()=>{
+        messenger.subscribe('askTop', ()=>{
             return 'ooooooooooooo'
         })
-        messenger.listen('askfromlevel2', (num)=>{
+        messenger.subscribe('askfromlevel2', (num)=>{
             return num*2
         })
     </script>

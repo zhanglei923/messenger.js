@@ -16,7 +16,7 @@ Will support IE9/10 soon...
 //In pageA, we need to ask summation for two given numbers.
 //Let's name this event as "ask_for_sum", and emit this event and two inputs.
 //if any page is listening this event and sent result back, you will receive it in method then():
-messenger.request('ask_for_sum', 2, 3).then((result)=>{
+messenger.post('ask_for_sum', 2, 3).then((result)=>{
      console.log('sum:', result)
 })
 
@@ -24,12 +24,12 @@ messenger.request('ask_for_sum', 2, 3).then((result)=>{
 
 ```javascript
 //In pageB, listen this particular event, do calculate and return result:
-messenger.listen('ask_for_sum', (num1, num2)=>{
+messenger.subscribe('ask_for_sum', (num1, num2)=>{
    return num1+num2;//sent result back to pageA
 });
 
 //or, it is also ok to return a promise instance for async scenarios
-messenger.listen('ask_for_sum', (num1, num2)=>{
+messenger.subscribe('ask_for_sum', (num1, num2)=>{
     var promise = new Promise((resolve, reject)=>{
         setTimeout(()=>{//async process
             resolve(num1+num2);//sent result back to pageA

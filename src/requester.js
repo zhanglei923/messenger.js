@@ -42,7 +42,7 @@
             if(_currentTarget.contentWindow) _currentTarget = _currentTarget.contentWindow;
             return messenger;
         }
-        messenger.request= function (){
+        messenger.post= function (){
             var me = this;
             var eventName = arguments[0];
             var args = [];
