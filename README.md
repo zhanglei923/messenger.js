@@ -1,6 +1,6 @@
 # Messenger.js
 
-A 'postMessage' based browser side event-bus.
+A 'postMessage' based cross iframe/domain event-bus.
 
 # Install
 ```html
