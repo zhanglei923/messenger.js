@@ -6,8 +6,8 @@
 <body>level2
         <script type="text/javascript">
             var ask = ()=>{
-                messenger.post('askfromlevel2', 3).then((result)=>{
-                    console.warn('got!', result)
+                messenger.post('askfromlevel2', 3).then((result, msgInfo)=>{
+                    console.warn('got!', 'count='+msgInfo.count, 'result='+result)
                 })
             }
             messenger.subscribe('askAndReceiveTwice', ()=>{
