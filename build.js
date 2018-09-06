@@ -5,7 +5,7 @@ var compressor = require('node-minify');
 let libPath = pathUtil.resolve(__dirname, './lib')
 let srcPath = pathUtil.resolve(__dirname, './src/')
 let distPath = pathUtil.resolve(__dirname, './dist/')
-let npmPath = pathUtil.resolve(__dirname, '../messenger-npm')
+let npmPath = pathUtil.resolve(__dirname, '../messengerjs-npm')
 
 let bluebird = fs.readFileSync(pathUtil.resolve(libPath, 'bluebird.min.js'),'utf8');
 let content = fs.readFileSync(pathUtil.resolve(srcPath, 'main.js'),'utf8');
@@ -13,7 +13,7 @@ let content1 = fs.readFileSync(pathUtil.resolve(srcPath, 'requester.js'),'utf8')
 let content2 = fs.readFileSync(pathUtil.resolve(srcPath, 'listener.js'),'utf8');
 content = content+'\n'+content1+'\n'+content2;
 var clean = (content) =>{
-    content = content.replace(/console\.log/g, '//')
+    content = content.replace(/console\.log/g, '')
     return content;
 }
 let thisyear = (new Date()).getFullYear();
@@ -32,10 +32,13 @@ var promise = compressor.minify({
     output: pathUtil.resolve(distPath, 'temp_min.js'),
     callback: function(err, min) {}
 });
-promise.then(function(min) {
-    let mincontent = 
+let mincontent;
+let mincontentcmd;
+promise.then((min) => {
+    min = clean(min)
+    mincontent = 
         `${license}(()=>{${min};window.messenger=messenger;})();`;
-    let mincontentcmd = 
+    mincontentcmd = 
 `${license}
 define(function (require, exports, module) {
 ${min}
@@ -45,7 +48,7 @@ module.exports = messenger;
     fs.writeFileSync(pathUtil.resolve(distPath, 'messenger.cmd.js'), mincontentcmd); 
     //fs.writeFileSync(pathUtil.resolve(distPath, 'postmessage-plus.cmd.js'), clean(content_cmd)); 
     if(fs.existsSync(npmPath)){
-        fs.writeFileSync(pathUtil.resolve(npmPath, 'postmessage-plus.module.js'), clean(content_module));
+        fs.writeFileSync(pathUtil.resolve(npmPath, 'messenger.dist.js'), mincontent);
     }else{
         console.log('can not output to:', npmPath)
     }
