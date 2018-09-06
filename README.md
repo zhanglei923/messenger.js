@@ -23,14 +23,14 @@ messenger.post('ask_for_sum', 1, 2).then((result)=>{
 ```javascript
 //below is the way to subscribe event and send result back:
 messenger.subscribe('ask_for_sum', (num1, num2)=>{
-   return num1+num2;//sent result back to pageA
+   return num1+num2;//send result back to requester
 });
 
 //it is also ok to return a promise instance, for async scenarios
 messenger.subscribe('ask_for_sum', (num1, num2)=>{
     var promise = new Promise((resolve, reject)=>{
         setTimeout(()=>{//async process
-            resolve(num1+num2);//sent result back to pageA
+            resolve(num1+num2);//send result back to requester
         }, 2000)
     })
     return promise;
