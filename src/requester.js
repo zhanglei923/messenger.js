@@ -1,6 +1,6 @@
 //request
 ((messenger)=>{
-    var generateToken = function(){
+    var generateToken = ()=>{
         var time = (Math.random()*1.7+'') +'-'+ 2.3 * (new Date())
         return time.replace(/\./ig,'');
     }
@@ -9,10 +9,10 @@
     var _waitingPromiseMap = {};
     var thisPageId = 'page-'+generateToken();
 
-    messenger.getPageId= function(){
+    messenger.getPageId= ()=>{
             return thisPageId;
         }
-    messenger.getTargetWindows= function(){
+    messenger.getTargetWindows= ()=>{
             var iframelist = [];//[window.parent];
             iframelist.push({
                                 is: 'self',
