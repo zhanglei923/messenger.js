@@ -6,7 +6,7 @@ Browser Support is IE9+
 # Install
 
 ```html
-<script src="./messenger.dist.js" ></script>
+<script src="./messenger.min.js" ></script>
 ```
 
 # API
