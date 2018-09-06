@@ -12,28 +12,15 @@ Browser Support is IE9+
 # API
 
 ```javascript
-//In pageA, post an event with two numbers to ask for somepage to do calculate
-messenger.post('ask_for_sum', 2, 3).then((result)=>{
+//post an event request 'ask_for_sum' with two parameters 1 and 2, to see if someone is subscribing
+messenger.post('ask_for_sum', 1, 2).then((result)=>{
      console.log('sum:', result)
-})
-
-messenger.post('ask_for_sum', 2, 3).then((result, msgInfo)=>{    
-     //print result     
-     console.log('sum:', result);
-     
-     //see how many results received   
-     console.log('received result count: ', msgInfo.count);  
-     
-     //run stopReceive() to stop receiving
-     if(msgInfo.count >= 2){
-          msgInfo.stopReceive();
-     }
 })
 
 ```
 
 ```javascript
-//In pageB, subscribe this particular event 'ask_for_sum', do calculate and return result back:
+//In pageB, subscribe to this event, get two parameters, do addition and return result back:
 messenger.subscribe('ask_for_sum', (num1, num2)=>{
    return num1+num2;//sent result back to pageA
 });
@@ -52,13 +39,27 @@ messenger.subscribe('ask_for_sum', (num1, num2)=>{
 
 ```javascript
 //Finally, you will get a console print below in pageA:
-sum: 5
+sum: 3
 
 ```
 
 ```javascript
 //you can also do:
 messenger.stopSubscribe('ask_for_sum');//stop subscribe
+
+//use msgInfo.count and msgInfo.stopReceive to limit receives
+messenger.post('ask_for_sum', 1, 2).then((result, msgInfo)=>{    
+     //print result     
+     console.log('sum:', result);
+     
+     //see how many results received   
+     console.log('received result count: ', msgInfo.count);  
+     
+     //run stopReceive() to stop receiving
+     if(msgInfo.count >= 2){
+          msgInfo.stopReceive();
+     }
+})
 
 ```
 
