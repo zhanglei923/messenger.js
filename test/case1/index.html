@@ -5,6 +5,15 @@
 </head>
 <body>
     <script>
+        var callself=()=>{
+            messenger.request('askSelf', 5).then((result)=>{
+                console.warn('got-self!', result)
+            })
+        }
+        messenger.listen('askSelf', (num)=>{
+            return 'ooooo'+num
+        })
+        ////////////////////
         var call=()=>{
             messenger.request('asklevel3', 11,22,true,[]).then((result)=>{
                 console.warn('got!', result)
@@ -25,6 +34,7 @@
     <iframe id="frame2" src="./child-level1.html" ></iframe>
     <hr>
     <button onclick="call()">call</button>
+    <button onclick="callself()">call-self</button>
 
 </body>
 </html>
