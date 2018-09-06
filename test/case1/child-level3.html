@@ -12,6 +12,9 @@
         messenger.subscribe('asklevel3', ()=>{
             return 'wwwwwwwwwwwwwww'
         })
+        messenger.subscribe('askAndReceiveTwice', ()=>{
+            return 'askAndReceiveTwice'
+        })
 
         var askTop = ()=>{
             messenger.post('askTop', 3).then((result)=>{

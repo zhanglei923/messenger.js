@@ -15,11 +15,15 @@
         })
         ////////////////////
         var call=()=>{
-            messenger.post('asklevel3', 11,22,true,[]).then((result)=>{
-                console.warn('got!', result)
+            messenger.post('asklevel3', 11,22,true,[]).then((result, msgInfo)=>{
+                console.warn('got!', result, msgInfo.count)
             })
-            messenger.post('asklevel1', 11,22,true,[]).then((result)=>{
-                console.warn('got!', result)
+            messenger.post('asklevel1', 11,22,true,[]).then((result, msgInfo)=>{
+                console.warn('got!', result, msgInfo.count)
+            })
+            messenger.post('askAndReceiveTwice', 11,22,true,[]).then((result, msgInfo)=>{
+                console.warn('should only receive twice!', msgInfo.count, result)
+                if(msgInfo.count >= 2)msgInfo.stopReceive();//stop receive
             })
         }
         messenger.subscribe('askTop', ()=>{

@@ -10,6 +10,9 @@
                     console.warn('got!', result)
                 })
             }
+            messenger.subscribe('askAndReceiveTwice', ()=>{
+                return 'askAndReceiveTwice'
+            })
         </script>
         <button onclick="ask()">call</button>
     <iframe id="frame1" src="./child-level3.html" ></iframe>

@@ -76,7 +76,9 @@ new Promise(function (resolve, reject) {});
                 }, _currentTargetHost);
             }
         }
-        _waitingPromiseMap[responseToken] = {};
+        _waitingPromiseMap[responseToken] = {
+            receiveCount: 0
+        };
         return {
             then: function then(cb) {
                 _waitingPromiseMap[responseToken].cb = cb;
@@ -94,7 +96,11 @@ new Promise(function (resolve, reject) {});
     var process = function process(responseToken, data) {
         var result = data.result;
         //console.warn('got response', window.location.href, result)
-        _waitingPromiseMap[responseToken].cb(result);
+        var stopReceive = function stopReceive() {
+            delete _waitingPromiseMap[responseToken];
+        };
+        var count = ++_waitingPromiseMap[responseToken].receiveCount;
+        _waitingPromiseMap[responseToken].cb(result, { count: count, stopReceive: stopReceive });
     };
     if (window.addEventListener) {
         window.addEventListener("message", handleResponse);

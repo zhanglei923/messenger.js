@@ -17,6 +17,9 @@
                 })
                 return promise;
             })
+            messenger.subscribe('askAndReceiveTwice', ()=>{
+                return 'askAndReceiveTwice'
+            })
         </script>
     <iframe id="frame1" src="./child-level2.html" ></iframe>
 

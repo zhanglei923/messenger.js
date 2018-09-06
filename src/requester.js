@@ -67,7 +67,9 @@
                     }, _currentTargetHost);
                 }
             }
-            _waitingPromiseMap[responseToken] = {};
+            _waitingPromiseMap[responseToken] = {
+                receiveCount: 0
+            };
             return {
                 then: (cb)=>{
                     _waitingPromiseMap[responseToken].cb = cb;
@@ -85,7 +87,11 @@
     var process = (responseToken, data)=>{
         var result = data.result;
         //console.warn('got response', window.location.href, result)
-        _waitingPromiseMap[responseToken].cb(result)
+        let stopReceive = ()=>{
+            delete _waitingPromiseMap[responseToken];
+        }
+        let count = ++_waitingPromiseMap[responseToken].receiveCount;
+        _waitingPromiseMap[responseToken].cb(result, {count: count, stopReceive: stopReceive});
     };
     if (window.addEventListener) {
         window.addEventListener("message", handleResponse);
