@@ -1,7 +1,11 @@
 # Messenger.js
 
-A browser(IE9+) side cross iframe/domain event-bus.
-#### encrypted message channel.
+A browser side event-bus.
+
+#### IE9+
+#### cross domain.
+#### cross iframe.
+#### encrypted communication channel.
 
 # Install
 
