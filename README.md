@@ -2,10 +2,11 @@
 
 A browser side event-bus.
 
-#### IE9+
-#### cross domain.
-#### cross iframe.
-#### encrypted communication channel.
+##### IE9+
+##### two-way data transfer.
+##### promise response supported.
+##### cross domain and iframe.
+##### encrypted communication channel.
 
 # Install
 
