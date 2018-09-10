@@ -64,9 +64,11 @@
         }
     }
     messenger.subscribe = function(eventName, callback){
+        eventName = md5_util(eventName)
         _listeningEvents[eventName] = callback;
     };    
     messenger.stopSubscribe = function(eventName){
+        eventName = md5_util(eventName)
         delete _listeningEvents[eventName];
     };
     if (window.addEventListener) {

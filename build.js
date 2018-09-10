@@ -1,6 +1,8 @@
 let fs = require('fs');
 let pathUtil = require('path');
 var compressor = require('node-minify');
+var md5src = fs.readFileSync(pathUtil.resolve(__dirname, './lib/md5.min.js'),'utf8');
+md5src=md5src+`var md5_util = md5;delete window.md5;`
 var es6_downgrade_util = require('./lib/es6_downgrade_util')
 
 let srcPath = pathUtil.resolve(__dirname, './src/')
@@ -15,7 +17,8 @@ let content = fs.readFileSync(pathUtil.resolve(srcPath, 'main.js'),'utf8');
 let content1 = fs.readFileSync(pathUtil.resolve(srcPath, 'requester.js'),'utf8');
 let content2 = fs.readFileSync(pathUtil.resolve(srcPath, 'listener.js'),'utf8');
 content = content+'\n'+content1+'\n'+content2;
-content = es6_downgrade_util.update(content)
+content = es6_downgrade_util.update(content);
+
 let thisyear = (new Date()).getFullYear();
 let version = 'v0.6.0'
 let license = 
@@ -26,7 +29,7 @@ let license =
 * Copyright (c) 2013-${thisyear} ZhangLei (zhanglei923@gmail.com)
 * https://github.com/zhanglei923/messenger.js
 */`
-fs.writeFileSync(pathUtil.resolve(distPath, 'messenger.src.js'), license+'\n'+content); 
+fs.writeFileSync(pathUtil.resolve(distPath, 'messenger.src.js'), content); 
 var promise = compressor.minify({
     compressor: 'gcc',
     input: pathUtil.resolve(distPath, 'messenger.src.js'),
@@ -38,10 +41,11 @@ let mincontentcmd;
 promise.then((min) => {
     min = clean(min)
     mincontent = 
-        `${license}(()=>{${min};window.messenger=messenger;})();`;
+        `${license}\n${md5src}\n(()=>{${min};window.messenger=messenger;})();`;
     mincontentcmd = 
 `${license}
 define(function (require, exports, module) {
+${md5src}
 ${min}
 module.exports = messenger;
 })`;

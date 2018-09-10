@@ -45,6 +45,7 @@
         messenger.post= function (){
             var me = this;
             var eventName = arguments[0];
+            eventName = md5_util(eventName)
             var args = [];
             for(var i = 1; i < arguments.length; i++){
                 args.push(arguments[i]);
