@@ -13,9 +13,9 @@ Browser Support is IE9+
 
 ```javascript
 //Supose in pageA
-//you post an event named 'ask_for_sum' with two parameters 1 and 2, to see if someone is subscribing
+//you post an event named 'ask_for_sum' with two parameters 1 and 2 to see if someone is subscribing.
 messenger.post('ask_for_sum', 1, 2).then((result)=>{
-     //if someone is subscribing to this event and post his response back, it should be received at here:
+     //if someone is subscribing to this event and post his response back, then it should be received at here:
      console.log('sum:', result)// sum: 3
 });
 ```
