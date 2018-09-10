@@ -18,20 +18,20 @@ A browser side event-bus.
 
 ```javascript
 //Supose in pageA
-//you post an event named 'ask_for_sum' with two parameters 1 and 2 to see if someone is subscribing.
+//post an event with a name of 'ask_for_sum', and two parameters: 1, 2.
 messenger.post('ask_for_sum', 1, 2).then((result)=>{
-     //if someone is subscribing to this event and post his response back, then it should be received at here:
+     //if somepage is subscribing to this event-name and post it's response back, then it should be received at here:
      console.log('sum:', result)// sum: 3
 });
 ```
 
 ```javascript
-//below is the way to subscribe event and send result back:
+//subscribe event and send result back:
 messenger.subscribe('ask_for_sum', (num1, num2)=>{
-   return num1+num2;//send result back to requester
+   return num1+num2;
 });
 
-//it is also ok to return a promise instance, for async scenarios
+//also ok to return promise instance, in case of async scenarios
 messenger.subscribe('ask_for_sum', (num1, num2)=>{
     var promise = new Promise((resolve, reject)=>{
         setTimeout(()=>{//async process
@@ -44,18 +44,17 @@ messenger.subscribe('ask_for_sum', (num1, num2)=>{
 ```
 
 ```javascript
-//you can also do:
 messenger.stopSubscribe('ask_for_sum');//stop subscribe
 
-//use 'msgInfo' to count receives or terminate by run stopReceive()
+//use 'msgInfo' to do more things!
 messenger.post('ask_for_sum', 1, 2).then((result, msgInfo)=>{    
      //print result     
      console.log('sum:', result);
      
-     //see how many results received   
+     //count receive times
      console.log('received result count: ', msgInfo.count);  
      
-     //run stopReceive() to stop receiving
+     //stop receiving
      if(msgInfo.count >= 2){
           msgInfo.stopReceive();
      }
