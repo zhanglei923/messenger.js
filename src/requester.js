@@ -2,12 +2,12 @@
 ((messenger)=>{
     var generateToken = ()=>{
         var time = (Math.random()*1.7+'') +'-'+ 2.3 * (new Date())
-        return time.replace(/\./ig,'');
+        return md5_util(time.replace(/\./ig,''));
     }
     var _currentTarget = window.parent;
     var _currentTargetHost = '*';
     var _waitingPromiseMap = {};
-    var thisPageId = 'page-'+generateToken();
+    var thisPageId = 'pg_'+generateToken();
 
     messenger.getPageId= ()=>{
             return thisPageId;
@@ -50,7 +50,7 @@
             for(var i = 1; i < arguments.length; i++){
                 args.push(arguments[i]);
             }
-            var responseToken = 'messenger-'+generateToken();
+            var responseToken = 'resp_'+generateToken();
             var windows = me.getTargetWindows();
             for(var i = 0; i < windows.length; i++){
                 var iframe = windows[i];

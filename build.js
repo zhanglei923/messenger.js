@@ -20,7 +20,7 @@ content = content+'\n'+content1+'\n'+content2;
 content = es6_downgrade_util.update(content);
 
 let thisyear = (new Date()).getFullYear();
-let version = 'v0.6.0'
+let version = 'v0.7.0'
 let license = 
 `/* 
 * Messenger.js 
