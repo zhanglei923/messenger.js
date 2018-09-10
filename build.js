@@ -20,7 +20,7 @@ content = es6_downgrade_util.update(content);
 fs.writeFileSync(pathUtil.resolve(distPath, 'messenger.src.js'), content); 
 
 let thisyear = (new Date()).getFullYear();
-let version = 'v0.7.2'
+let version = 'v0.7.4'
 let license = 
 `/* 
 * Messenger.js 

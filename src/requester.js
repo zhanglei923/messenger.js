@@ -50,7 +50,7 @@
             for(var i = 1; i < arguments.length; i++){
                 args.push(arguments[i]);
             }
-            var responseToken = 'resp_'+generateToken();
+            var responseToken = ''+generateToken();
             var windows = me.getTargetWindows();
             for(var i = 0; i < windows.length; i++){
                 var iframe = windows[i];
