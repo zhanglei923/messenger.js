@@ -1,7 +1,7 @@
 # Messenger.js
 
 A browser side cross iframe/domain event-bus.
-Browser Support is IE9+
+Support IE9+
 
 # Install
 
