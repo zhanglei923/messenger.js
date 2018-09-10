@@ -68,12 +68,13 @@
                     }, _currentTargetHost);
                 }
             }
-            _waitingPromiseMap[responseToken] = {
+            var encrypedToken = getEncrypedResponseToken(responseToken);
+            _waitingPromiseMap[encrypedToken] = {
                 receiveCount: 0
             };
             return {
                 then: (cb)=>{
-                    _waitingPromiseMap[responseToken].cb = cb;
+                    _waitingPromiseMap[encrypedToken].cb = cb;
                 }
             };
         }

@@ -19,7 +19,7 @@
                     messengerjs:{
                         isResp: true,      
                         responsePageId: messenger.getPageId(),                          
-                        responseToken,
+                        responseToken: getEncrypedResponseToken(responseToken),
                         result,
                         from: iframe.from
                     }

@@ -14,9 +14,9 @@ var clean = (content) =>{
     return content;
 }
 let content = fs.readFileSync(pathUtil.resolve(srcPath, 'main.js'),'utf8');
-let content1 = fs.readFileSync(pathUtil.resolve(srcPath, 'requester.js'),'utf8');
-let content2 = fs.readFileSync(pathUtil.resolve(srcPath, 'listener.js'),'utf8');
-content = content+'\n'+content1+'\n'+content2;
+let contentRequester = fs.readFileSync(pathUtil.resolve(srcPath, 'requester.js'),'utf8');
+let contentListener = fs.readFileSync(pathUtil.resolve(srcPath, 'listener.js'),'utf8');
+content = content+'\n'+contentRequester+'\n'+contentListener;
 content = es6_downgrade_util.update(content);
 
 let thisyear = (new Date()).getFullYear();
@@ -41,13 +41,18 @@ let mincontentcmd;
 promise.then((min) => {
     min = clean(min)
     mincontent = 
-        `${license}\n${md5src}\n(()=>{${min};window.messenger=messenger;})();`;
+`${license}
+(()=>{
+${md5src}
+//--
+${min};window.messenger=messenger;
+})();`;
     mincontentcmd = 
 `${license}
 define(function (require, exports, module) {
 ${md5src}
-${min}
-module.exports = messenger;
+//--
+${min};module.exports = messenger;
 })`;
     fs.writeFileSync(pathUtil.resolve(distPath, 'messenger.min.js'), mincontent); 
     fs.writeFileSync(pathUtil.resolve(distPath, 'messenger.cmd.js'), mincontentcmd); 
