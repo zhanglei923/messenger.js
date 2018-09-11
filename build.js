@@ -27,7 +27,7 @@ content = es6_downgrade_util.update(content);
 fs.writeFileSync(pathUtil.resolve(distPath, 'messenger.src.js'), content); 
 
 let thisyear = (new Date()).getFullYear();
-let version = 'v0.8.4'
+let version = 'v0.8.6'
 let license = 
 `/* 
 * Messenger.js 
@@ -64,7 +64,7 @@ define(function (require, exports, module) {
 ${min};module.exports = messenger;
 })`;
 
-var mincontentcommon = 
+var mincontentes6 = 
 `${license}
 import md5 from 'blueimp-md5'
 ${min};
@@ -73,10 +73,10 @@ export default messenger;
 
     fs.writeFileSync(pathUtil.resolve(distPath, 'messenger.min.js'), mincontent); 
     fs.writeFileSync(pathUtil.resolve(distPath, 'messenger.cmd.js'), mincontentcmd); 
-    fs.writeFileSync(pathUtil.resolve(distPath, 'messenger.es6.js'), mincontentcommon); 
+    fs.writeFileSync(pathUtil.resolve(distPath, 'messenger.es6.js'), mincontentes6); 
     //fs.writeFileSync(pathUtil.resolve(distPath, 'postmessage-plus.cmd.js'), clean(content_cmd)); 
     if(fs.existsSync(npmPath)){
-        fs.writeFileSync(pathUtil.resolve(npmPath, 'messenger.min.js'), mincontent);
+        fs.writeFileSync(pathUtil.resolve(npmPath, 'index.js'), mincontentes6);
     }else{
         console.log('can not output to:', npmPath)
     }
