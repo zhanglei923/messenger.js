@@ -1,3 +1,14 @@
+let thisyear = (new Date()).getFullYear();
+let version = 'v0.8.7'
+let license = 
+`/* 
+* Messenger.js 
+* ${version}
+* The MIT License (MIT)
+* Copyright (c) 2013-${thisyear} ZhangLei (zhanglei923@gmail.com)
+* https://github.com/zhanglei923/messenger.js
+*/`
+
 let fs = require('fs');
 let pathUtil = require('path');
 var compressor = require('node-minify');
@@ -26,16 +37,6 @@ ${contentListener}
 content = es6_downgrade_util.update(content);
 fs.writeFileSync(pathUtil.resolve(distPath, 'messenger.src.js'), content); 
 
-let thisyear = (new Date()).getFullYear();
-let version = 'v0.8.6'
-let license = 
-`/* 
-* Messenger.js 
-* ${version}
-* The MIT License (MIT)
-* Copyright (c) 2013-${thisyear} ZhangLei (zhanglei923@gmail.com)
-* https://github.com/zhanglei923/messenger.js
-*/`
 var promise = compressor.minify({
     compressor: 'uglifyjs',
     input: pathUtil.resolve(distPath, 'messenger.src.js'),

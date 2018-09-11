@@ -6,7 +6,7 @@
 <body>
     <script>
         var callself=()=>{
-            messenger.emit('askSelf', 5).then((result)=>{
+            messenger.emit('askSelf', 5).onResponse((result)=>{
                 console.warn('got-self!', result)
             })
         }
@@ -15,13 +15,13 @@
         })
         ////////////////////
         var call=()=>{
-            messenger.emit('asklevel3', 11,22,true,[]).then((result, msgInfo)=>{
+            messenger.emit('asklevel3', 11,22,true,[]).onResponse((result, msgInfo)=>{
                 console.warn('got!', result, 'count='+msgInfo.count)
             })
-            messenger.emit('asklevel1', 11,22,true,[]).then((result, msgInfo)=>{
+            messenger.emit('asklevel1', 11,22,true,[]).onResponse((result, msgInfo)=>{
                 console.warn('got!', result, 'count='+msgInfo.count)
             })
-            messenger.emit('askAndReceiveTwice', 11,22,true,[]).then((result, msgInfo)=>{
+            messenger.emit('askAndReceiveTwice', 11,22,true,[]).onResponse((result, msgInfo)=>{
                 console.warn('should only receive twice!', 'count='+msgInfo.count, 'result='+result)
                 if(msgInfo.count >= 2)msgInfo.stopReceive();//stop receive
             })

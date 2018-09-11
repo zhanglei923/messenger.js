@@ -17,7 +17,7 @@
         })
 
         var askTop = ()=>{
-            messenger.emit('askTop', 3).then((result)=>{
+            messenger.emit('askTop', 3).onResponse((result)=>{
                 console.warn('got!', result)
             })
         }

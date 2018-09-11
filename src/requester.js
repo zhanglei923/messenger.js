@@ -74,7 +74,7 @@
                 receiveCount: 0
             };
             return {
-                then: (cb)=>{
+                onResponse: (cb)=>{
                     _waitingPromiseMap[responseToken].cb = cb;
                 }
             };

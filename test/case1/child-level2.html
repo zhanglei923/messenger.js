@@ -6,7 +6,7 @@
 <body>level2
         <script type="text/javascript">
             var ask = ()=>{
-                messenger.emit('askfromlevel2', 3).then((result, msgInfo)=>{
+                messenger.emit('askfromlevel2', 3).onResponse((result, msgInfo)=>{
                     console.warn('got!', 'count='+msgInfo.count, 'result='+result)
                 })
             }
