@@ -7,7 +7,7 @@
     var _currentTarget = window.parent;
     var _currentTargetHost = '*';
     var _waitingPromiseMap = {};
-    var thisPageId = 'pg_'+generateToken();
+    var thisPageId = ''+generateToken();
 
     messenger.getPageId= ()=>{
             return thisPageId;
