@@ -13,9 +13,16 @@ var clean = (content) =>{
     return content;
 }
 let content = fs.readFileSync(pathUtil.resolve(srcPath, 'main.js'),'utf8');
+let contentEncrypt = fs.readFileSync(pathUtil.resolve(srcPath, 'encrypt.js'),'utf8');
 let contentRequester = fs.readFileSync(pathUtil.resolve(srcPath, 'requester.js'),'utf8');
 let contentListener = fs.readFileSync(pathUtil.resolve(srcPath, 'listener.js'),'utf8');
-content = content+'\n'+contentRequester+'\n'+contentListener;
+
+content = `
+${content}
+${contentEncrypt}
+${contentRequester}
+${contentListener}
+`
 content = es6_downgrade_util.update(content);
 fs.writeFileSync(pathUtil.resolve(distPath, 'messenger.src.js'), content); 
 

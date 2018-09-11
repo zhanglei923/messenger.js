@@ -68,13 +68,12 @@
                     }, _currentTargetHost);
                 }
             }
-            var encrypedToken = getEncrypedResponseToken(responseToken);
-            _waitingPromiseMap[encrypedToken] = {
+            _waitingPromiseMap[responseToken] = {
                 receiveCount: 0
             };
             return {
                 then: (cb)=>{
-                    _waitingPromiseMap[encrypedToken].cb = cb;
+                    _waitingPromiseMap[responseToken].cb = cb;
                 }
             };
         }
@@ -82,8 +81,9 @@
     var handleResponse = function(data){
         //console.log('on msg', window.location.href, data)
         var data = data.data;
-        if(data.messengerjs && data.messengerjs.isResp && _waitingPromiseMap[data.messengerjs.responseToken]){
-            process(data.messengerjs.responseToken, data.messengerjs)
+        var responseToken = decodeStr(data.messengerjs.responseToken)
+        if(data.messengerjs && data.messengerjs.isResp && _waitingPromiseMap[responseToken]){
+            process(responseToken, data.messengerjs)
         }
     };
     var process = (responseToken, data)=>{
