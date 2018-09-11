@@ -43,8 +43,7 @@ var promise = compressor.minify({
     callback: function(err, min) {}
 });
 promise.then((min) => {
-    // min = min.replace(/md5\_util/g, ('a'+Math.random()).replace(/\./ig, ''))
-    // min = min.replace(/getEncrypedResponseToken/g, ('a'+Math.random()).replace(/\./ig, ''))
+    min = min.replace(/md5\_util/g, ('a'+Math.random()).replace(/\./ig, ''))
     
     min = clean(min)
 
