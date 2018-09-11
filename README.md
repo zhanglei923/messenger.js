@@ -10,10 +10,11 @@ A browser side event-bus.
 
 # Install
 
+script tag:
 ```html
 <script src="./messenger.min.js" ></script>
 ```
-
+npm:
 ```javascript
 npm i longbow-messenger.js
 ```
