@@ -14,6 +14,10 @@ A browser side event-bus.
 <script src="./messenger.min.js" ></script>
 ```
 
+```javascript
+npm i longbow-messenger.js
+```
+
 # API
 
 ```javascript
