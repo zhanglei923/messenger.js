@@ -5,11 +5,11 @@
 </head>
 <body>level1
         <script type="text/javascript">
-            messenger.subscribe('asklevel1', ()=>{
+            messenger.listen('asklevel1', ()=>{
                 return 'bar'
             })
             
-            messenger.subscribe('askfromlevel2', (num)=>{
+            messenger.listen('askfromlevel2', (num)=>{
                 var promise = new Promise((resolve, reject)=>{
                     setTimeout(()=>{                        
                         resolve(num*4);
@@ -17,7 +17,7 @@
                 })
                 return promise;
             })
-            messenger.subscribe('askAndReceiveTwice', ()=>{
+            messenger.listen('askAndReceiveTwice', ()=>{
                 return 'askAndReceiveTwice'
             })
         </script>

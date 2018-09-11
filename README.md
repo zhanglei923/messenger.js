@@ -19,7 +19,7 @@ A browser side event-bus.
 ```javascript
 //Supose in pageA
 //post an event with a name of 'ask_for_sum', and two parameters: 1, 2.
-messenger.post('ask_for_sum', 1, 2).then((result)=>{
+messenger.emit('ask_for_sum', 1, 2).then((result)=>{
      //if somepage is subscribing to this event-name and post it's response back, then it should be received at here:
      console.log('sum:', result)// sum: 3
 });
@@ -27,12 +27,12 @@ messenger.post('ask_for_sum', 1, 2).then((result)=>{
 
 ```javascript
 //subscribe event and send result back:
-messenger.subscribe('ask_for_sum', (num1, num2)=>{
+messenger.listen('ask_for_sum', (num1, num2)=>{
    return num1+num2;
 });
 
 //also ok to return promise instance, in case of async scenarios
-messenger.subscribe('ask_for_sum', (num1, num2)=>{
+messenger.listen('ask_for_sum', (num1, num2)=>{
     var promise = new Promise((resolve, reject)=>{
         setTimeout(()=>{//async process
             resolve(num1+num2);//send result back to requester
@@ -44,11 +44,11 @@ messenger.subscribe('ask_for_sum', (num1, num2)=>{
 ```
 
 ```javascript
-//stop subscribe
-messenger.stopSubscribe('ask_for_sum');
+//stop listen
+messenger.stopListen('ask_for_sum');
 
 //use 'msgInfo' to do more things!
-messenger.post('ask_for_sum', 1, 2).then((result, msgInfo)=>{    
+messenger.emit('ask_for_sum', 1, 2).then((result, msgInfo)=>{    
      //print result     
      console.log('sum:', result);
      

@@ -42,7 +42,7 @@
             if(_currentTarget.contentWindow) _currentTarget = _currentTarget.contentWindow;
             return messenger;
         }
-        messenger.post= function (){
+        messenger.emit= function (){
             var me = this;
             var eventName = arguments[0];
             eventName = md5_util(eventName)

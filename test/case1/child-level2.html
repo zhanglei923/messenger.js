@@ -6,11 +6,11 @@
 <body>level2
         <script type="text/javascript">
             var ask = ()=>{
-                messenger.post('askfromlevel2', 3).then((result, msgInfo)=>{
+                messenger.emit('askfromlevel2', 3).then((result, msgInfo)=>{
                     console.warn('got!', 'count='+msgInfo.count, 'result='+result)
                 })
             }
-            messenger.subscribe('askAndReceiveTwice', ()=>{
+            messenger.listen('askAndReceiveTwice', ()=>{
                 return 'askAndReceiveTwice'
             })
         </script>
