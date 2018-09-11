@@ -15,7 +15,7 @@
             var iframe = windows[i]
             if(iframe.win.postMessage){
                 //console.log('send response:', eventName, responseToken, iframe)
-                iframe.win.postMessage({
+                var obj = {
                     messengerjs:{
                         isResp: true,      
                         responsePageId: messenger.getPageId(),                          
@@ -23,7 +23,9 @@
                         result,
                         from: iframe.from
                     }
-                }, '*');
+                };
+                obj = JSON.parse(JSON.stringify(obj));
+                iframe.win.postMessage(obj, '*');
             }
         }
     }
@@ -52,14 +54,18 @@
             for(var i = 0; i < iframes.length; i++){
                 data.from = 'parent';
                 //console.log('godeep', window.location.href, i, data)
-                iframes[i].contentWindow.postMessage({messengerjs:data},'*');
+                var obj = {messengerjs:data}
+                obj = JSON.parse(JSON.stringify(obj));
+                iframes[i].contentWindow.postMessage(obj,'*');
             }
         }
         if(data.from === 'child'){//继续向parent传播
             //console.log('from child', window.location.href)
-            if(window !== parent){
+            if(window !== window.parent){
                 data.from = 'child';
-                window.parent.postMessage({messengerjs:data},'*');
+                var obj = {messengerjs:data}
+                obj = JSON.parse(JSON.stringify(obj));
+                window.parent.postMessage(obj,'*');
             }
         }
     }

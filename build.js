@@ -27,7 +27,7 @@ content = es6_downgrade_util.update(content);
 fs.writeFileSync(pathUtil.resolve(distPath, 'messenger.src.js'), content); 
 
 let thisyear = (new Date()).getFullYear();
-let version = 'v0.8.3'
+let version = 'v0.8.4'
 let license = 
 `/* 
 * Messenger.js 
@@ -42,29 +42,39 @@ var promise = compressor.minify({
     output: pathUtil.resolve(distPath, 'temp_min.js'),
     callback: function(err, min) {}
 });
-let mincontent;
-let mincontentcmd;
 promise.then((min) => {
-    min = min.replace(/md5\_util/g, ('a'+Math.random()).replace(/\./ig, ''))
-    min = min.replace(/getEncrypedResponseToken/g, ('a'+Math.random()).replace(/\./ig, ''))
+    // min = min.replace(/md5\_util/g, ('a'+Math.random()).replace(/\./ig, ''))
+    // min = min.replace(/getEncrypedResponseToken/g, ('a'+Math.random()).replace(/\./ig, ''))
     
     min = clean(min)
-    mincontent = 
+
+var mincontent = 
 `${license}
 (()=>{
 ${md5src}
 //--
 ${min};window.messenger=messenger;
 })();`;
-    mincontentcmd = 
+
+var mincontentcmd = 
 `${license}
 //--
 ${md5src}
 define(function (require, exports, module) {
 ${min};module.exports = messenger;
 })`;
+
+var mincontentcommon = 
+`${license}
+import md5 from 'blueimp-md5'
+window.md5=md5;
+${min};
+export default messenger;
+`;
+
     fs.writeFileSync(pathUtil.resolve(distPath, 'messenger.min.js'), mincontent); 
     fs.writeFileSync(pathUtil.resolve(distPath, 'messenger.cmd.js'), mincontentcmd); 
+    fs.writeFileSync(pathUtil.resolve(distPath, 'messenger.es6.js'), mincontentcommon); 
     //fs.writeFileSync(pathUtil.resolve(distPath, 'postmessage-plus.cmd.js'), clean(content_cmd)); 
     if(fs.existsSync(npmPath)){
         fs.writeFileSync(pathUtil.resolve(npmPath, 'messenger.min.js'), mincontent);

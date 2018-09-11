@@ -56,7 +56,7 @@
                 var iframe = windows[i];
                 if(iframe.win.postMessage){
                     console.log('sent-req:', eventName, responseToken, iframe)
-                    iframe.win.postMessage({
+                    var obj = {
                         messengerjs:{
                             isReq: true,//表明是request
                             eventName,//请求的名字
@@ -65,7 +65,9 @@
                             requestPageId: thisPageId, //发起请求的页面id
                             from: iframe.from
                         }
-                    }, _currentTargetHost);
+                    };
+                    obj = JSON.parse(JSON.stringify(obj));
+                    iframe.win.postMessage(obj, _currentTargetHost);
                 }
             }
             _waitingPromiseMap[responseToken] = {
