@@ -52,7 +52,8 @@ var mincontent =
 (()=>{
 ${md5src}
 //--
-${min};window.messenger=messenger;
+${min};
+window.messenger=messenger;
 })();`;
 
 var mincontentcmd = 
@@ -66,7 +67,6 @@ ${min};module.exports = messenger;
 var mincontentcommon = 
 `${license}
 import md5 from 'blueimp-md5'
-window.md5=md5;
 ${min};
 export default messenger;
 `;
