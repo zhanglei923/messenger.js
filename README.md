@@ -19,7 +19,7 @@ A browser side event-bus.
 ```javascript
 //Supose in pageA
 //post an event with a name of 'ask_for_sum', and two parameters: 1, 2.
-messenger.emit('ask_for_sum', 1, 2).then((result)=>{
+messenger.emit('ask_for_sum', 1, 2).onResponse((result)=>{
      //if somepage is subscribing to this event-name and post it's response back, then it should be received at here:
      console.log('sum:', result)// sum: 3
 });
@@ -48,7 +48,7 @@ messenger.listen('ask_for_sum', (num1, num2)=>{
 messenger.stopListen('ask_for_sum');
 
 //use 'msgInfo' to do more things!
-messenger.emit('ask_for_sum', 1, 2).then((result, msgInfo)=>{    
+messenger.emit('ask_for_sum', 1, 2).onResponse((result, msgInfo)=>{    
      //print result     
      console.log('sum:', result);
      
