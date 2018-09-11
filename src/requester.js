@@ -96,7 +96,9 @@
             delete _waitingPromiseMap[responseToken];
         }
         let count = ++_waitingPromiseMap[responseToken].receiveCount;
-        _waitingPromiseMap[responseToken].cb(result, {count: count, stopReceive: stopReceive});
+        if(_waitingPromiseMap[responseToken].cb){
+            _waitingPromiseMap[responseToken].cb(result, {count: count, stopReceive: stopReceive});
+        }
     };
     if (window.addEventListener) {
         window.addEventListener("message", handleResponse);
