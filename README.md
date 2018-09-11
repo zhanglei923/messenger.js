@@ -44,7 +44,8 @@ messenger.subscribe('ask_for_sum', (num1, num2)=>{
 ```
 
 ```javascript
-messenger.stopSubscribe('ask_for_sum');//stop subscribe
+//stop subscribe
+messenger.stopSubscribe('ask_for_sum');
 
 //use 'msgInfo' to do more things!
 messenger.post('ask_for_sum', 1, 2).then((result, msgInfo)=>{    
