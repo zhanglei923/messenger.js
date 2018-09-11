@@ -27,7 +27,7 @@ content = es6_downgrade_util.update(content);
 fs.writeFileSync(pathUtil.resolve(distPath, 'messenger.src.js'), content); 
 
 let thisyear = (new Date()).getFullYear();
-let version = 'v0.8.0'
+let version = 'v0.8.1'
 let license = 
 `/* 
 * Messenger.js 
@@ -58,9 +58,9 @@ ${min};window.messenger=messenger;
 })();`;
     mincontentcmd = 
 `${license}
-define(function (require, exports, module) {
-${md5src}
 //--
+${md5src}
+define(function (require, exports, module) {
 ${min};module.exports = messenger;
 })`;
     fs.writeFileSync(pathUtil.resolve(distPath, 'messenger.min.js'), mincontent); 

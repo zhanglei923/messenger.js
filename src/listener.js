@@ -4,7 +4,7 @@
     var handleRequest = function (data) {
         //console.log('on msg', window.location.href, data)
         var data = data.data;
-        if(data.messengerjs /**&& data.messengerjs.isReq **/){
+        if(data && data.messengerjs /**&& data.messengerjs.isReq **/){
             process(data.messengerjs)
         }
     }

@@ -78,9 +78,10 @@
             };
         }
     
-    var handleResponse = function(data){
+    var handleResponse = (data)=>{
         //console.log('on msg', window.location.href, data)
         var data = data.data;
+        if(!data || !data.messengerjs)return;
         var responseToken = decodeStr(data.messengerjs.responseToken)
         if(data.messengerjs && data.messengerjs.isResp && _waitingPromiseMap[responseToken]){
             process(responseToken, data.messengerjs)
