@@ -51,7 +51,20 @@ function makeRandomNumber() {
     return text;
 };
 //console.warn('random-alphabet', makeRandomAlphabet(), makeRandomAlphabet('upper'), makeRandomAlphabet('lower'), makeRandomNumber());
-
+function makeRespCode(){
+    return  makeRandomAlphabet()
+}
+function isRespCode(info){
+    var firstLetter = info.substring(0,1)
+    return  /\b[a-zA-Z]\b/.test(firstLetter)
+}
+function makeReqCode(){
+    return  makeRandomNumber()
+}
+function isReqCode(info){
+    var firstLetter = info.substring(0,1)
+    return  /\b[0-9]\b/.test(firstLetter)
+}
 // var userinput = md5_util('12341234123');
 // //userinput = '123abc'
 // var encoded = encodeStr(userinput)

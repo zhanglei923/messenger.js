@@ -15,9 +15,11 @@
             var iframe = windows[i]
             if(iframe.win.postMessage){
                 //console.log('send response:', eventName, responseToken, iframe)
+                var isResp = makeRespCode();//英文字母代表是response
                 var obj = {
                     messengerjs:{
-                        isResp: true,      
+                        info:`${isResp}dsfas231`,
+                        //isResp: true,      
                         responsePageId: messenger.getPageId(),                          
                         responseToken: encodeStr(responseToken),
                         result,
@@ -37,16 +39,18 @@
         
         var fn = _listeningEvents[eventName]
         //console.log('process', !!fn, window.location.href)
-        if(fn && data.isReq){
-            var result = fn.apply(window, args)
-            if(result && typeof result.then === 'function'){
-                result.then((data)=>{
-                    doResponse(responseToken, data)
-                })
-            }else{
-                doResponse(responseToken, result)
-            }
-            
+        if(fn && data.info){
+            var isReq = isReqCode(data.info);
+            if(isReq){
+                var result = fn.apply(window, args)
+                if(result && typeof result.then === 'function'){
+                    result.then((data)=>{
+                        doResponse(responseToken, data)
+                    })
+                }else{
+                    doResponse(responseToken, result)
+                }
+            }            
         }
         //转发
         if(data.from === 'parent'){//继续向child传播

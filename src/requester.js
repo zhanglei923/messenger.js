@@ -56,9 +56,11 @@
                 var iframe = windows[i];
                 if(iframe.win.postMessage){
                     console.log('sent-req:', eventName, responseToken, iframe)
+                    var isReq = makeReqCode();//表明是request
                     var obj = {
                         messengerjs:{
-                            isReq: true,//表明是request
+                            info:`${isReq}`,
+                            //isReq: true,//表明是request
                             eventName,//请求的名字
                             args,//本次请求的参数
                             responseToken,//本次请求的token，一次性
@@ -85,8 +87,12 @@
         var data = data.data;
         if(!data || !data.messengerjs)return;
         var responseToken = decodeStr(data.messengerjs.responseToken)
-        if(data.messengerjs && data.messengerjs.isResp && _waitingPromiseMap[responseToken]){
-            process(responseToken, data.messengerjs)
+        //if(data.messengerjs && data.messengerjs.isResp && _waitingPromiseMap[responseToken]){
+        if(data.messengerjs && data.messengerjs.info){
+            var isResp = isRespCode(data.messengerjs.info);
+            if(isResp && _waitingPromiseMap[responseToken]){
+                process(responseToken, data.messengerjs)
+            }
         }
     };
     var process = (responseToken, data)=>{
