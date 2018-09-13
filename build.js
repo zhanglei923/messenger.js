@@ -1,5 +1,5 @@
 let thisyear = (new Date()).getFullYear();
-let version = 'v0.8.7'
+let version = 'v0.8.8'
 let license = 
 `/* 
 * Messenger.js 
@@ -20,6 +20,7 @@ let distPath = pathUtil.resolve(__dirname, './dist/')
 let npmPath = pathUtil.resolve(__dirname, '../messengerjs-npm')
 
 var clean = (content) =>{
+    //return content;
     content = content.replace(/console\.log/g, '')
     return content;
 }

@@ -33,6 +33,24 @@ function decodeStr (encoded){
     str = arr2.join('') + arr1.join('') 
     return str;
 }
+function makeRandomAlphabet(capitalize) {
+    var text = "";
+    var alphabets = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    var alphabetsUpper = alphabets.toUpperCase();
+    var alphabetsLower = alphabets.toLowerCase();
+    var possible = alphabetsUpper+alphabetsLower;
+    if(typeof capitalize !== 'undefined' && capitalize === 'upper') possible = alphabetsUpper;
+    if(typeof capitalize !== 'undefined' && capitalize === 'lower') possible = alphabetsLower;
+    text += possible.charAt(Math.floor(Math.random() * possible.length));
+    return text;
+};
+function makeRandomNumber() {
+    var text = "";
+    var possible = "0123456789";
+    text += possible.charAt(Math.floor(Math.random() * possible.length));
+    return text;
+};
+//console.warn('random-alphabet', makeRandomAlphabet(), makeRandomAlphabet('upper'), makeRandomAlphabet('lower'), makeRandomNumber());
 
 // var userinput = md5_util('12341234123');
 // //userinput = '123abc'
