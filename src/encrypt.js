@@ -76,18 +76,18 @@ function decryptFromCode(info){
     if(letter === '1') return 'child';
     if(letter === '2') return 'parent';
 }
-function encryptMessageData(data){
+function encryptMessageData(data, status){
     //req & resp
-    if(data.isResp){
+    if(status.isResp){
         var isResp = makeRespCode();//英文字母代表是response
         data.info = `${isResp}`;
     }
-    if(data.isReq){
+    if(status.isReq){
         var isReq = makeReqCode();//表明是request
         data.info = `${isReq}`;
     }
     //from
-    var fromCode = encryptFromCode(data.from)
+    var fromCode = encryptFromCode(status.from)
     data.info = data.info + fromCode;
     
     return data;
@@ -95,14 +95,15 @@ function encryptMessageData(data){
 function decryptMessageData(data){    
     var isResp = isRespCode(data.info);
     var isReq = isReqCode(data.info);
+    var status = {}
     if(isResp){
-        data.isResp = true;
+        status.isResp = true;
     }
     if(isReq){
-        data.isReq = true;
+        status.isReq = true;
     }
-    data.from = decryptFromCode(data.info)
-    return data;
+    status.from = decryptFromCode(data.info)
+    return status;
 }
 // var userinput = md5_util('12341234123');
 // //userinput = '123abc'

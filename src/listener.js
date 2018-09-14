@@ -16,14 +16,15 @@
             //console.log('send response:', eventName, responseToken, iframe)
             var obj = {
                 messengerjs:{
-                    isResp: true,      
                     responsePageId: messenger.getPageId(),                          
                     responseToken: encodeStr(responseToken),
-                    result,
-                    from: iframe.from
+                    result
                 }
             };
-            obj.messengerjs = encryptMessageData(obj.messengerjs);
+            obj.messengerjs = encryptMessageData(obj.messengerjs, {
+                isResp: true,
+                from: iframe.from
+            });
             obj = JSON.parse(JSON.stringify(obj));
             doPostMessage(iframe.win, obj, '*');
         }
@@ -36,9 +37,9 @@
         
         var fn = _listeningEvents[eventName]
         //console.log('process', !!fn, window.location.href)
-        data = decryptMessageData(data);
+        var status = decryptMessageData(data);
         if(fn && data){
-            if(data.isReq){
+            if(status.isReq){
                 var result = fn.apply(window, args)
                 if(result && typeof result.then === 'function'){
                     result.then((data)=>{
@@ -50,20 +51,20 @@
             }            
         }
         //转发
-        if(data.from === 'parent'){//继续向child传播
+        if(status.from === 'parent'){//继续向child传播
             var iframes = document.getElementsByTagName('iframe');
             for(var i = 0; i < iframes.length; i++){
-                data.from = 'parent';
+                status.from = 'parent';
                 //console.log('godeep', window.location.href, i, data)
                 var obj = {messengerjs:data}
                 obj = JSON.parse(JSON.stringify(obj));
                 doPostMessage(iframes[i].contentWindow, obj, '*');
             }
         }
-        if(data.from === 'child'){//继续向parent传播
+        if(status.from === 'child'){//继续向parent传播
             //console.log('from child', window.location.href)
             if(window !== window.parent){
-                data.from = 'child';
+                status.from = 'child';
                 var obj = {messengerjs:data}
                 obj = JSON.parse(JSON.stringify(obj));
                 doPostMessage(window.parent, obj, '*');

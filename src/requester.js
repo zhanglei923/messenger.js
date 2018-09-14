@@ -57,15 +57,16 @@
                 console.log('sent-req:', eventName, responseToken, iframe)
                 var obj = {
                     messengerjs:{
-                        isReq: true,//表明是request
                         eventName,//请求的名字
                         args,//本次请求的参数
                         responseToken,//本次请求的token，一次性
                         requestPageId: thisPageId, //发起请求的页面id
-                        from: iframe.from
                     }
                 };
-                obj.messengerjs = encryptMessageData(obj.messengerjs);
+                obj.messengerjs = encryptMessageData(obj.messengerjs, {
+                    isReq: true,//表明是request
+                    from: iframe.from
+                });
                 obj = JSON.parse(JSON.stringify(obj));
                 doPostMessage(iframe.win, obj, _currentTargetHost);
             }
@@ -86,8 +87,8 @@
         var responseToken = decodeStr(data.messengerjs.responseToken)
         //if(data.messengerjs && data.messengerjs.isResp && _waitingPromiseMap[responseToken]){
         if(data.messengerjs && data.messengerjs.info){
-            data.messengerjs = decryptMessageData(data.messengerjs)
-            if(data.messengerjs.isResp && _waitingPromiseMap[responseToken]){
+           var status = decryptMessageData(data.messengerjs)
+            if(status.isResp && _waitingPromiseMap[responseToken]){
                 process(responseToken, data.messengerjs)
             }
         }
