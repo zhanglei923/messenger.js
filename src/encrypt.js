@@ -55,27 +55,44 @@ function makeRespCode(){
     return  makeRandomAlphabet()
 }
 function isRespCode(info){
-    var firstLetter = info.substring(0,1)
-    return  /\b[a-zA-Z]\b/.test(firstLetter)
+    var letter = info.substring(0,1)
+    return  /\b[a-zA-Z]\b/.test(letter)
 }
 function makeReqCode(){
     return  makeRandomNumber()
 }
 function isReqCode(info){
-    var firstLetter = info.substring(0,1)
-    return  /\b[0-9]\b/.test(firstLetter)
+    var letter = info.substring(0,1)
+    return  /\b[0-9]\b/.test(letter)
+}
+function encryptFromCode(from){
+    if(from === 'self') return 0;
+    if(from === 'child') return 1;
+    if(from === 'parent') return 2;
+}
+function decryptFromCode(info){
+    var letter = info.substring(1,2)
+    if(letter === '0') return 'self';
+    if(letter === '1') return 'child';
+    if(letter === '2') return 'parent';
 }
 function encryptMessageData(data){
-    if(data.isResp){        
+    //req & resp
+    if(data.isResp){
         var isResp = makeRespCode();//英文字母代表是response
         data.info = `${isResp}`;
-        delete data.isResp;
     }
     if(data.isReq){
         var isReq = makeReqCode();//表明是request
         data.info = `${isReq}`;
-        delete data.isReq;
     }
+    //from
+    var fromCode = encryptFromCode(data.from)
+    data.info = data.info + fromCode;
+    
+    delete data.isReq;
+    delete data.isResp;
+    delete data.from;
     return data;
 }
 function decryptMessageData(data){    
@@ -87,6 +104,7 @@ function decryptMessageData(data){
     if(isReq){
         data.isReq = true;
     }
+    data.from = decryptFromCode(data.info)
     return data;
 }
 // var userinput = md5_util('12341234123');
