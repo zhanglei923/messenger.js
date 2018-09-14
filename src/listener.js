@@ -15,17 +15,16 @@
             var iframe = windows[i]
             if(iframe.win.postMessage){
                 //console.log('send response:', eventName, responseToken, iframe)
-                var isResp = makeRespCode();//英文字母代表是response
                 var obj = {
                     messengerjs:{
-                        info:`${isResp}dsfas231`,
-                        //isResp: true,      
+                        isResp: true,      
                         responsePageId: messenger.getPageId(),                          
                         responseToken: encodeStr(responseToken),
                         result,
                         from: iframe.from
                     }
                 };
+                obj.messengerjs = encryptMessageData(obj.messengerjs);
                 obj = JSON.parse(JSON.stringify(obj));
                 iframe.win.postMessage(obj, '*');
             }
@@ -39,9 +38,9 @@
         
         var fn = _listeningEvents[eventName]
         //console.log('process', !!fn, window.location.href)
-        if(fn && data.info){
-            var isReq = isReqCode(data.info);
-            if(isReq){
+        data = decryptMessageData(data);
+        if(fn && data){
+            if(data.isReq){
                 var result = fn.apply(window, args)
                 if(result && typeof result.then === 'function'){
                     result.then((data)=>{

@@ -65,6 +65,30 @@ function isReqCode(info){
     var firstLetter = info.substring(0,1)
     return  /\b[0-9]\b/.test(firstLetter)
 }
+function encryptMessageData(data){
+    if(data.isResp){        
+        var isResp = makeRespCode();//英文字母代表是response
+        data.info = `${isResp}`;
+        delete data.isResp;
+    }
+    if(data.isReq){
+        var isReq = makeReqCode();//表明是request
+        data.info = `${isReq}`;
+        delete data.isReq;
+    }
+    return data;
+}
+function decryptMessageData(data){    
+    var isResp = isRespCode(data.info);
+    var isReq = isReqCode(data.info);
+    if(isResp){
+        data.isResp = true;
+    }
+    if(isReq){
+        data.isReq = true;
+    }
+    return data;
+}
 // var userinput = md5_util('12341234123');
 // //userinput = '123abc'
 // var encoded = encodeStr(userinput)
