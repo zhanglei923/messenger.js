@@ -13,21 +13,19 @@
         var windows = messenger.getTargetWindows();
         for(var i = 0; i < windows.length; i++){
             var iframe = windows[i]
-            if(iframe.win.postMessage){
-                //console.log('send response:', eventName, responseToken, iframe)
-                var obj = {
-                    messengerjs:{
-                        isResp: true,      
-                        responsePageId: messenger.getPageId(),                          
-                        responseToken: encodeStr(responseToken),
-                        result,
-                        from: iframe.from
-                    }
-                };
-                obj.messengerjs = encryptMessageData(obj.messengerjs);
-                obj = JSON.parse(JSON.stringify(obj));
-                iframe.win.postMessage(obj, '*');
-            }
+            //console.log('send response:', eventName, responseToken, iframe)
+            var obj = {
+                messengerjs:{
+                    isResp: true,      
+                    responsePageId: messenger.getPageId(),                          
+                    responseToken: encodeStr(responseToken),
+                    result,
+                    from: iframe.from
+                }
+            };
+            obj.messengerjs = encryptMessageData(obj.messengerjs);
+            obj = JSON.parse(JSON.stringify(obj));
+            doPostMessage(iframe.win, obj, '*');
         }
     }
     var process = function(data){
@@ -59,7 +57,7 @@
                 //console.log('godeep', window.location.href, i, data)
                 var obj = {messengerjs:data}
                 obj = JSON.parse(JSON.stringify(obj));
-                iframes[i].contentWindow.postMessage(obj,'*');
+                doPostMessage(iframes[i].contentWindow, obj, '*');
             }
         }
         if(data.from === 'child'){//继续向parent传播
@@ -68,7 +66,7 @@
                 data.from = 'child';
                 var obj = {messengerjs:data}
                 obj = JSON.parse(JSON.stringify(obj));
-                window.parent.postMessage(obj,'*');
+                doPostMessage(window.parent, obj, '*');
             }
         }
     }

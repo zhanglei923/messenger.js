@@ -90,9 +90,6 @@ function encryptMessageData(data){
     var fromCode = encryptFromCode(data.from)
     data.info = data.info + fromCode;
     
-    delete data.isReq;
-    delete data.isResp;
-    delete data.from;
     return data;
 }
 function decryptMessageData(data){    

@@ -54,22 +54,20 @@
             var windows = me.getTargetWindows();
             for(var i = 0; i < windows.length; i++){
                 var iframe = windows[i];
-                if(iframe.win.postMessage){
-                    console.log('sent-req:', eventName, responseToken, iframe)
-                    var obj = {
-                        messengerjs:{
-                            isReq: true,//表明是request
-                            eventName,//请求的名字
-                            args,//本次请求的参数
-                            responseToken,//本次请求的token，一次性
-                            requestPageId: thisPageId, //发起请求的页面id
-                            from: iframe.from
-                        }
-                    };
-                    obj.messengerjs = encryptMessageData(obj.messengerjs);
-                    obj = JSON.parse(JSON.stringify(obj));
-                    iframe.win.postMessage(obj, _currentTargetHost);
-                }
+                console.log('sent-req:', eventName, responseToken, iframe)
+                var obj = {
+                    messengerjs:{
+                        isReq: true,//表明是request
+                        eventName,//请求的名字
+                        args,//本次请求的参数
+                        responseToken,//本次请求的token，一次性
+                        requestPageId: thisPageId, //发起请求的页面id
+                        from: iframe.from
+                    }
+                };
+                obj.messengerjs = encryptMessageData(obj.messengerjs);
+                obj = JSON.parse(JSON.stringify(obj));
+                doPostMessage(iframe.win, obj, _currentTargetHost);
             }
             _waitingPromiseMap[responseToken] = {
                 receiveCount: 0
