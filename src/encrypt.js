@@ -65,18 +65,20 @@ function isReqCode(info){
     var letter = info.substring(0,1)
     return  /\b[0-9]\b/.test(letter)
 }
-function encryptFromCode(from){
+function encryptFromCode(desc, from){
     if(from === 'self') return 0;
     if(from === 'child') return 1;
     if(from === 'parent') return 2;
 }
-function decryptFromCode(info){
+function decryptFromCode(desc, info){
     var letter = info.substring(1,2)
     if(letter === '0') return 'self';
     if(letter === '1') return 'child';
     if(letter === '2') return 'parent';
 }
 function encryptMessageData(data, status){
+    var isResp = status.isResp;
+    var isReq = status.isReq;
     //req & resp
     if(status.isResp){
         var isResp = makeRespCode();//英文字母代表是response
@@ -87,8 +89,10 @@ function encryptMessageData(data, status){
         data.info = `${isReq}`;
     }
     //from
-    var fromCode = encryptFromCode(status.from)
+    var fromCode = encryptFromCode({isReq, isResp}, status.from)
     data.info = data.info + fromCode;
+    if(isReq) data.info = data.info + data.requestPageId;
+    if(isResp) data.info = data.info + data.responsePageId;
     
     return data;
 }
@@ -102,7 +106,10 @@ function decryptMessageData(data){
     if(isReq){
         status.isReq = true;
     }
-    status.from = decryptFromCode(data.info)
+    status.from = decryptFromCode({isReq, isResp}, data.info)
+    var pageid = data.info.substring(2, 2+32)
+    if(isReq) status.requestPageId = pageid;
+    if(isResp) status.responsePageId = pageid;
     return status;
 }
 // var userinput = md5_util('12341234123');
