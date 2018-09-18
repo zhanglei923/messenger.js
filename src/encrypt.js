@@ -104,7 +104,7 @@ function encryptMessageData(data, status){
     if(tokenLength === 32) token = token + md5_util(Math.random()) + md5_util(Math.random())//补齐到96位
     data.info += tokenLengthMark + token;
 
-    data.responseToken = status.responseToken
+    //data.responseToken = status.responseToken
 
     //console.warn('tokenLength', token, tokenLength)
 
@@ -121,18 +121,24 @@ function decryptMessageData(data){
         status.isReq = true;
     }
     status.from = decryptFromCode({isReq, isResp}, data.info)
+    // 2+32+2+96
+    var currentInfoStr = data.info.substring(2)
     //pageid
-    var pageid = data.info.substring(2, 2+32)
+    var pageid = currentInfoStr.substring(0, 32);currentInfoStr = currentInfoStr.substring(32)
     if(isReq) status.requestPageId = pageid;
     if(isResp) status.responsePageId = pageid;
     //token
-    var tokenInfo = data.info.substring((2+2+32), (2+2+32) + (2+96))
-    var tokenLength = parseInt(tokenInfo.substring(0, 2))
-    var token = tokenInfo.substring(2, tokenLength)
+    //console.warn(currentInfoStr.length)
+    var tokenLengthStr = currentInfoStr.substring(0, 2);currentInfoStr = currentInfoStr.substring(2)
+    var tokenLength = parseInt(tokenLengthStr)
 
-    //console.warn('kk', token.length)
+    var token = currentInfoStr.substring(0, 96);currentInfoStr = currentInfoStr.substring(96)
 
-    status.responseToken = data.responseToken;
+    //console.warn('kk',currentInfoStr.length, tokenLength, token.length)
+    if(tokenLength === 32) token = token.substring(0, tokenLength)
+    status.responseToken = token
+
+    //status.responseToken = data.responseToken;
 
 
     return status;
