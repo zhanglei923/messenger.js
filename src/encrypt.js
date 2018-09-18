@@ -12,7 +12,8 @@ function encodeStr (str){
     for(var i = 0; i< arr.length; i++){
         newarr.push(impurities[i] + arr[i] + impurities2[i]);
     }
-    return newarr.join('');
+    let newstr = newarr.join('')
+    return newstr;
 }
 function decodeStr (encoded){
     let arr = encoded.split('').reverse();
@@ -90,10 +91,23 @@ function encryptMessageData(data, status){
     }
     //from
     var fromCode = encryptFromCode({isReq, isResp}, status.from)
-    data.info = data.info + fromCode;
-    if(isReq) data.info = data.info + data.requestPageId;
-    if(isResp) data.info = data.info + data.responsePageId;
-    
+    data.info += fromCode;
+    //pageid
+    if(isReq) data.info += status.requestPageId;
+    if(isResp) data.info += status.responsePageId;
+    //tokens
+    let token = status.responseToken;
+    let tokenLength = token.length;
+    let tokenLengthMark;
+    if(tokenLength === 32) tokenLengthMark = 32;
+    if(tokenLength === 96) tokenLengthMark = 96;
+    if(tokenLength === 32) token = token + md5_util(Math.random()) + md5_util(Math.random())//补齐到96位
+    data.info += tokenLengthMark + token;
+
+    data.responseToken = status.responseToken
+
+    //console.warn('tokenLength', token, tokenLength)
+
     return data;
 }
 function decryptMessageData(data){    
@@ -107,9 +121,20 @@ function decryptMessageData(data){
         status.isReq = true;
     }
     status.from = decryptFromCode({isReq, isResp}, data.info)
+    //pageid
     var pageid = data.info.substring(2, 2+32)
     if(isReq) status.requestPageId = pageid;
     if(isResp) status.responsePageId = pageid;
+    //token
+    var tokenInfo = data.info.substring((2+2+32), (2+2+32) + (2+96))
+    var tokenLength = parseInt(tokenInfo.substring(0, 2))
+    var token = tokenInfo.substring(2, tokenLength)
+
+    //console.warn('kk', token.length)
+
+    status.responseToken = data.responseToken;
+
+
     return status;
 }
 // var userinput = md5_util('12341234123');

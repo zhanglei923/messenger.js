@@ -51,6 +51,7 @@
                 args.push(arguments[i]);
             }
             var responseToken = ''+generateToken();
+            //console.warn('generateToken',responseToken.length)
             var windows = me.getTargetWindows();
             for(var i = 0; i < windows.length; i++){
                 var iframe = windows[i];
@@ -59,13 +60,13 @@
                     messengerjs:{
                         eventName,//请求的名字
                         args,//本次请求的参数
-                        responseToken,//本次请求的token，一次性
-                        requestPageId: thisPageId, //发起请求的页面id
                     }
                 };
                 obj.messengerjs = encryptMessageData(obj.messengerjs, {
                     isReq: true,//表明是request
-                    from: iframe.from
+                    from: iframe.from,                    
+                    requestPageId: thisPageId, //发起请求的页面id
+                    responseToken,//本次请求的token，一次性
                 });
                 obj = JSON.parse(JSON.stringify(obj));
                 doPostMessage(iframe.win, obj, _currentTargetHost);
@@ -84,10 +85,10 @@
         //console.log('on msg', window.location.href, data)
         var data = data.data;
         if(!data || !data.messengerjs)return;
-        var responseToken = decodeStr(data.messengerjs.responseToken)
+        var status = decryptMessageData(data.messengerjs)
+        var responseToken = decodeStr(status.responseToken)
         //if(data.messengerjs && data.messengerjs.isResp && _waitingPromiseMap[responseToken]){
         if(data.messengerjs && data.messengerjs.info){
-           var status = decryptMessageData(data.messengerjs)
             if(status.isResp && _waitingPromiseMap[responseToken]){
                 process(responseToken, data.messengerjs)
             }

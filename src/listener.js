@@ -15,15 +15,15 @@
             var iframe = windows[i]
             //console.log('send response:', eventName, responseToken, iframe)
             var obj = {
-                messengerjs:{
-                    responsePageId: messenger.getPageId(),                          
-                    responseToken: encodeStr(responseToken),
+                messengerjs:{                          
                     result
                 }
             };
             obj.messengerjs = encryptMessageData(obj.messengerjs, {
                 isResp: true,
-                from: iframe.from
+                from: iframe.from,
+                responsePageId: messenger.getPageId(),
+                responseToken: encodeStr(responseToken),
             });
             obj = JSON.parse(JSON.stringify(obj));
             doPostMessage(iframe.win, obj, '*');
@@ -33,11 +33,13 @@
         //invoke
         var args = data.args;
         var eventName = data.eventName;
-        var responseToken = data.responseToken;
+        var status = decryptMessageData(data);        
+        var responseToken = status.responseToken;
+
+        //console.warn('doResponse', responseToken, responseToken.length)
         
         var fn = _listeningEvents[eventName]
         //console.log('process', !!fn, window.location.href)
-        var status = decryptMessageData(data);
         if(fn && data){
             if(status.isReq){
                 var result = fn.apply(window, args)
