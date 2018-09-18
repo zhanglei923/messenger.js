@@ -58,11 +58,11 @@
                 console.log('sent-req:', eventName, responseToken, iframe)
                 var obj = {
                     messengerjs:{
-                        eventName,//请求的名字
                         args,//本次请求的参数
                     }
                 };
                 obj.messengerjs = encryptMessageData(obj.messengerjs, {
+                    eventName,//请求的名字
                     isReq: true,//表明是request
                     from: iframe.from,                    
                     requestPageId: thisPageId, //发起请求的页面id

@@ -103,6 +103,10 @@ function encryptMessageData(data, status){
     if(tokenLength === 96) tokenLengthMark = 96;
     if(tokenLength === 32) token = token + md5_util(Math.random()) + md5_util(Math.random())//补齐到96位
     data.info += tokenLengthMark + token;
+    //eventName
+    var hasEventName = !!status.eventName;
+    var fakeEventName = md5_util(Math.random())
+    data.info += (hasEventName?'1':'0') + (hasEventName?status.eventName:fakeEventName)
 
     //data.responseToken = status.responseToken
 
@@ -131,15 +135,20 @@ function decryptMessageData(data){
     //console.warn(currentInfoStr.length)
     var tokenLengthStr = currentInfoStr.substring(0, 2);currentInfoStr = currentInfoStr.substring(2)
     var tokenLength = parseInt(tokenLengthStr)
-
     var token = currentInfoStr.substring(0, 96);currentInfoStr = currentInfoStr.substring(96)
-
     //console.warn('kk',currentInfoStr.length, tokenLength, token.length)
     if(tokenLength === 32) token = token.substring(0, tokenLength)
-    status.responseToken = token
+    status.responseToken = token;
 
-    //status.responseToken = data.responseToken;
+    //eventName
+    var has = currentInfoStr.substring(0, 1);currentInfoStr = currentInfoStr.substring(1)
+    var hasEventName = (has === '1'?true:false);
+    var eventName = currentInfoStr.substring(0, 32);currentInfoStr = currentInfoStr.substring(32)
+    //console.warn(has, hasEventName, eventName.length)
 
+    if(hasEventName){
+        status.eventName = eventName;
+    }
 
     return status;
 }

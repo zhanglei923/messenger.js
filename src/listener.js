@@ -32,8 +32,8 @@
     var process = function(data){
         //invoke
         var args = data.args;
-        var eventName = data.eventName;
-        var status = decryptMessageData(data);        
+        var status = decryptMessageData(data);   
+        var eventName = status.eventName;     
         var responseToken = status.responseToken;
 
         //console.warn('doResponse', responseToken, responseToken.length)
