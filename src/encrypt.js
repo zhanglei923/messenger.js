@@ -111,10 +111,12 @@ function encryptMessageData(data, status){
     //data.responseToken = status.responseToken
 
     //console.warn('tokenLength', token, tokenLength)
+    data.info = encryptInfo(data.info);
 
     return data;
 }
-function decryptMessageData(data){    
+function decryptMessageData(data){   
+    data.info = decryptInfo(data.info); 
     var isResp = isRespCode(data.info);
     var isReq = isReqCode(data.info);
     var status = {}
@@ -149,8 +151,23 @@ function decryptMessageData(data){
     if(hasEventName){
         status.eventName = eventName;
     }
-
     return status;
+}
+var SHOULD_DECRYPT_CODE = md5_util(new Date()+'');
+let encryptInfo = (info)=>{
+    let arr = info.split('')
+    arr = arr.reverse();
+    var result = arr.join('')
+    return SHOULD_DECRYPT_CODE + result;
+}
+
+let decryptInfo = (info)=>{
+    if(info.indexOf(SHOULD_DECRYPT_CODE)!==0) return info;//如果只是转发就不必再次解密
+    info = info.substring(SHOULD_DECRYPT_CODE.length)    
+    let arr = info.split('')
+    arr = arr.reverse();
+    var result = arr.join('')
+    return result;
 }
 // var userinput = md5_util('12341234123');
 // //userinput = '123abc'
