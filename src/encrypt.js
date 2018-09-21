@@ -10,7 +10,7 @@ function encodeStr (str){
     let impurities2 = (md5_util(''+Math.random()+(new Date()))+md5_util(''+Math.random()+(new Date()))).split('')
     let newarr = []
     for(var i = 0; i< arr.length; i++){
-        newarr.push(impurities[i] + arr[i] + impurities2[i]);
+        newarr.push(makeRandomAlphabet() + arr[i] + makeRandomAlphabet());
     }
     let newstr = newarr.join('')
     return newstr;
@@ -158,12 +158,17 @@ let encryptInfo = (info)=>{
     let arr = info.split('')
     arr = arr.reverse();
     var result = arr.join('')
-    return SHOULD_DECRYPT_CODE + result;
+    result = result + 'z'//不是偶数，凑个偶数
+    result = encodeStr(result)//加密
+    result = SHOULD_DECRYPT_CODE + result;//HEAD
+    return result;
 }
 
 let decryptInfo = (info)=>{
     if(info.indexOf(SHOULD_DECRYPT_CODE)!==0) return info;//如果只是转发就不必再次解密
-    info = info.substring(SHOULD_DECRYPT_CODE.length)    
+    info = info.substring(SHOULD_DECRYPT_CODE.length)//HEAD
+    info = decodeStr(info); //解密
+    info = info.substring(0, info.length-1)//去掉凑偶数的字符
     let arr = info.split('')
     arr = arr.reverse();
     var result = arr.join('')
