@@ -3,13 +3,14 @@ var pathutil = require('path');
 var _ = require('lodash');
 
 var masterConfig = {
+    mode: 'development', //production
     devtool: 'eval-source-map',
     module: {
         // loaders: [
         // ]
     },
     entry: {
-        'js-sdk-rk': ['./src/main.js'],
+        'bundle': ['./src2/main.js'],
     },
     output: {
         path: pathutil.resolve(__dirname, "./dist/"),
