@@ -1,2 +1,2 @@
-import taskUtil from './sub';
-taskUtil.say()
+import encryptUtil from './encrypt';
+encryptUtil.say()
