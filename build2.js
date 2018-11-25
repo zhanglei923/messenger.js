@@ -1,6 +1,6 @@
 let webpack = require('webpack')
 let pathutil = require('path')
-console.log(webpack)
+//console.log(webpack)
 
 let config = {
     mode: 'development', //production
@@ -20,4 +20,7 @@ let config = {
     ]
 }
 let compiler = webpack(config);
-compiler.run((err, stats) => {});
+compiler.run((err, stats) => {
+    console.log(stats)
+    console.log(err)
+});
