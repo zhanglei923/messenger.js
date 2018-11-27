@@ -23,3 +23,11 @@ let compiler = webpack(config);
 compiler.run((err, stats) => {
     console.log('err', err)
 });
+
+let config_p = config;
+config_p.mode = 'production'
+config_p.output.filename = '[name].min.js'
+let compiler_p = webpack(config_p)
+compiler_p.run((err, stats) => {
+    console.log('err_p', err)
+});
