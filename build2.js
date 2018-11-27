@@ -14,7 +14,7 @@ let config = {
     },
     output: {
         path: pathutil.resolve(__dirname, "./dist/"),
-        filename: '[name]2.js'
+        filename: '[name].js'
     },
     plugins: [
     ],
