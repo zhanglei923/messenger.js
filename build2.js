@@ -21,6 +21,5 @@ let config = {
 }
 let compiler = webpack(config);
 compiler.run((err, stats) => {
-    console.log(stats)
-    console.log(err)
+    console.log('err', err)
 });
