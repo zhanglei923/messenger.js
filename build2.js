@@ -17,9 +17,10 @@ let config = {
         filename: '[name].js'
     },
     plugins: [
+        new UglifyJsPlugin()
     ],
     optimization: {
-        minimizer: [new UglifyJsPlugin()]
+        minimizer: []
     }
 }
 let compiler = webpack(config);
