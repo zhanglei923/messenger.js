@@ -1,3 +1,5 @@
+let encrypt = {};
+(()=>{
 function encodeStr (str){
     let len = str.length / 2
     let str1 = str.substring(0, len)
@@ -181,3 +183,8 @@ let decryptInfo = (info)=>{
 // console.log('encoded:',encoded)
 // console.log('dencoded:', decoded)
 // console.log('userinput==dencoded:', userinput === decoded)
+encrypt.encodeStr=encodeStr;
+encrypt.decodeStr=decodeStr;
+encrypt.encryptMessageData=encryptMessageData;
+encrypt.decryptMessageData=decryptMessageData;
+})();

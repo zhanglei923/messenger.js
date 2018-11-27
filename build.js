@@ -51,7 +51,7 @@ promise.then((min) => {
 
 var mincontent = 
 `${license}
-(()=>{
+;(()=>{
 ${md5src}
 //--
 ${min};
@@ -61,8 +61,8 @@ window.messenger=messenger;
 var mincontentcmd = 
 `${license}
 //--
-${md5src}
-define(function (require, exports, module) {
+;${md5src}
+;define(function (require, exports, module) {
 ${min};module.exports = messenger;
 })`;
 

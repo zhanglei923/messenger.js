@@ -19,11 +19,11 @@
                     result
                 }
             };
-            obj.messengerjs = encryptMessageData(obj.messengerjs, {
+            obj.messengerjs = encrypt.encryptMessageData(obj.messengerjs, {
                 isResp: true,
                 from: iframe.from,
                 responsePageId: messenger.getPageId(),
-                responseToken: encodeStr(responseToken),
+                responseToken: encrypt.encodeStr(responseToken),
             });
             obj = JSON.parse(JSON.stringify(obj));
             doPostMessage(iframe.win, obj, '*');
@@ -32,7 +32,7 @@
     var process = function(data){
         //invoke
         var args = data.args;
-        var status = decryptMessageData(data);   
+        var status = encrypt.decryptMessageData(data);   
         var eventName = status.eventName;     
         var responseToken = status.responseToken;
 

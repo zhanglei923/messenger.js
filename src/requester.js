@@ -61,7 +61,7 @@
                         args,//本次请求的参数
                     }
                 };
-                obj.messengerjs = encryptMessageData(obj.messengerjs, {
+                obj.messengerjs = encrypt.encryptMessageData(obj.messengerjs, {
                     eventName,//请求的名字
                     isReq: true,//表明是request
                     from: iframe.from,                    
@@ -85,8 +85,8 @@
         //console.log('on msg', window.location.href, data)
         var data = data.data;
         if(!data || !data.messengerjs)return;
-        var status = decryptMessageData(data.messengerjs)
-        var responseToken = decodeStr(status.responseToken)
+        var status = encrypt.decryptMessageData(data.messengerjs)
+        var responseToken = encrypt.decodeStr(status.responseToken)
         //if(data.messengerjs && data.messengerjs.isResp && _waitingPromiseMap[responseToken]){
         if(data.messengerjs && data.messengerjs.info){
             if(status.isResp && _waitingPromiseMap[responseToken]){
