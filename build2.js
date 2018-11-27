@@ -1,6 +1,6 @@
 let webpack = require('webpack')
 let pathutil = require('path')
-//console.log(webpack)
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 
 let config = {
     mode: 'development', //production
@@ -17,7 +17,10 @@ let config = {
         filename: '[name]2.js'
     },
     plugins: [
-    ]
+    ],
+    optimization: {
+        minimizer: [new UglifyJsPlugin()]
+    }
 }
 let compiler = webpack(config);
 compiler.run((err, stats) => {
