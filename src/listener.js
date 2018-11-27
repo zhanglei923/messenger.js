@@ -26,7 +26,7 @@
                 responseToken: encrypt.encodeStr(responseToken),
             });
             obj = JSON.parse(JSON.stringify(obj));
-            doPostMessage(iframe.win, obj, '*');
+            messenger.doPostMessage(iframe.win, obj, '*');
         }
     }
     var process = function(data){
@@ -60,7 +60,7 @@
                 //console.log('godeep', window.location.href, i, data)
                 var obj = {messengerjs:data}
                 obj = JSON.parse(JSON.stringify(obj));
-                doPostMessage(iframes[i].contentWindow, obj, '*');
+                messenger.doPostMessage(iframes[i].contentWindow, obj, '*');
             }
         }
         if(status.from === 'child'){//继续向parent传播
@@ -69,7 +69,7 @@
                 status.from = 'child';
                 var obj = {messengerjs:data}
                 obj = JSON.parse(JSON.stringify(obj));
-                doPostMessage(window.parent, obj, '*');
+                messenger.doPostMessage(window.parent, obj, '*');
             }
         }
     }

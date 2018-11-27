@@ -69,7 +69,7 @@
                     responseToken,//本次请求的token，一次性
                 });
                 obj = JSON.parse(JSON.stringify(obj));
-                doPostMessage(iframe.win, obj, _currentTargetHost);
+                messenger.doPostMessage(iframe.win, obj, _currentTargetHost);
             }
             _waitingPromiseMap[responseToken] = {
                 receiveCount: 0

@@ -1,7 +1,8 @@
-let messenger = {};
+
 var md5_util = md5;//window.md5=undefined;
-new Promise((resolve, reject)=>{});
-function doPostMessage(winObj, data, target, other){
+//new Promise((resolve, reject)=>{});
+let messenger = {
+ doPostMessage: function(winObj, data, target, other){
     if(!winObj.postMessage){
         return;
     } 
@@ -29,4 +30,5 @@ function doPostMessage(winObj, data, target, other){
         messengerjs: messengerjs2
     }
     winObj.postMessage(data2, target, other);
+}
 };
