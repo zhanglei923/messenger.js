@@ -1,5 +1,5 @@
 let thisyear = (new Date()).getFullYear();
-let version = 'v0.9.1'
+let version = 'v0.9.2'
 let license = 
 ` 
  Messenger.js 
