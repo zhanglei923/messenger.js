@@ -57,7 +57,7 @@ let init = (messenger)=>{
             var windows = me.getTargetWindows();
             for(var i = 0; i < windows.length; i++){
                 var iframe = windows[i];
-                console.log('sent-req:', eventName, responseToken, iframe)
+                //console.log('sent-req:', eventName, responseToken, iframe)
                 var obj = {
                     messengerjs:{
                         args,//本次请求的参数

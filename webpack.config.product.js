@@ -19,6 +19,9 @@ module.exports = {
         filename: '[name].min.js'
     },
     plugins: [
+        new webpack.BannerPlugin({
+            banner: require('./banner').banner
+          })
         // new UglifyJsPlugin(),
         // new webpack.optimize.MinChunkSizePlugin({
         //     minChunkSize: 10000 // Minimum number of characters

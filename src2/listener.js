@@ -88,7 +88,7 @@ let init = (messenger)=>{
     } else if (window.attachEvent) {
         window.attachEvent("onmessage", handleRequest);
     }
-    console.log('listening...')
+    //console.log('listening...')
 }
 let listener={
     init
