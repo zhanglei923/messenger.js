@@ -6,6 +6,7 @@ const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 let config = {
     mode: 'development', //production
     devtool: 'eval-source-map',
+    target: "web", // enum
     module: {
         // loaders: [
         // ]
@@ -18,11 +19,11 @@ let config = {
         filename: '[name].js'
     },
     plugins: [
-        new UglifyJsPlugin()
-    ],
-    optimization: {
-        minimizer: []
-    }
+        new UglifyJsPlugin(),
+        new webpack.optimize.MinChunkSizePlugin({
+            minChunkSize: 10000 // Minimum number of characters
+          })
+    ]
 }
 let compiler = webpack(config);
 compiler.run((err, stats) => {
@@ -33,6 +34,27 @@ let config_p = {
     mode: 'production',
     output:{
         filename: '[name].min.js'
+    },
+    optimization:{
+        minimize: false,
+        minimizer: [
+            new UglifyJsPlugin({
+                uglifyOptions: {
+                    sourceMap: false,
+                    warnings: false,
+                    parse: {},
+                    compress: {},
+                    mangle: true, // Note `mangle.properties` is `false` by default.
+                    output: null,
+                    toplevel: false,
+                    nameCache: null,
+                    ie8: true,
+                    keep_fnames: false,
+                  }
+            })
+        ],
+        removeEmptyChunks: true,
+        mergeDuplicateChunks: true,
     }
 };
 config_p = _.extend(config, config_p)
