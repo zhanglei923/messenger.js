@@ -1,7 +1,5 @@
 //listener
-let md5_util = require('blueimp-md5')
-import encrypt from './encrypt';
-let init = (messenger)=>{
+((messenger)=>{
     var _listeningEvents = {}
     var handleRequest = function (data) {
         //console.log('on msg', window.location.href, data)
@@ -88,9 +86,5 @@ let init = (messenger)=>{
     } else if (window.attachEvent) {
         window.attachEvent("onmessage", handleRequest);
     }
-    //console.log('listening...')
-}
-let listener={
-    init
-}
-export default listener;
+    console.log('listening...')
+})(messenger);

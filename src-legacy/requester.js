@@ -1,7 +1,5 @@
 //request
-let md5_util = require('blueimp-md5')
-import encrypt from './encrypt';
-let init = (messenger)=>{
+((messenger)=>{
     var generateToken = ()=>{
         var time = (Math.random()*1.7+'') +'-'+ 2.3 * (new Date())
         return md5_util(time.replace(/\./ig,''));
@@ -57,7 +55,7 @@ let init = (messenger)=>{
             var windows = me.getTargetWindows();
             for(var i = 0; i < windows.length; i++){
                 var iframe = windows[i];
-                //console.log('sent-req:', eventName, responseToken, iframe)
+                console.log('sent-req:', eventName, responseToken, iframe)
                 var obj = {
                     messengerjs:{
                         args,//本次请求的参数
@@ -113,8 +111,4 @@ let init = (messenger)=>{
         window.attachEvent("onmessage", handleResponse);
     }
     
-}
-let requester={
-    init
-}
-export default requester;
+})(messenger);

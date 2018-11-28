@@ -1,5 +1,6 @@
 let encrypt = {};
 (()=>{
+let md5_util = require('blueimp-md5')
 function encodeStr (str){
     let len = str.length / 2
     let str1 = str.substring(0, len)
@@ -188,3 +189,4 @@ encrypt.decodeStr=decodeStr;
 encrypt.encryptMessageData=encryptMessageData;
 encrypt.decryptMessageData=decryptMessageData;
 })();
+export default encrypt;

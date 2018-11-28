@@ -1,88 +1,16 @@
-let thisyear = (new Date()).getFullYear();
-let version = 'v0.8.12'
-let license = 
-`/* 
-* Messenger.js 
-* ${version}
-* The MIT License (MIT)
-* Copyright (c) 2013-${thisyear} ZhangLei (zhanglei923@gmail.com)
-* https://github.com/zhanglei923/messenger.js
-*/`
+let webpack = require('webpack')
+let _ = require('lodash')
+let pathutil = require('path')
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 
-let fs = require('fs');
-let pathUtil = require('path');
-var compressor = require('node-minify');
-var md5src = fs.readFileSync(pathUtil.resolve(__dirname, './lib/md5.min.js'),'utf8');
-var es6_downgrade_util = require('./lib/es6_downgrade_util')
-
-let srcPath = pathUtil.resolve(__dirname, './src/')
-let distPath = pathUtil.resolve(__dirname, './dist/')
-let npmPath = pathUtil.resolve(__dirname, '../messengerjs-npm')
-
-var clean = (content) =>{
-    //return content;
-    content = content.replace(/console\.log/g, '')
-    return content;
-}
-let content = fs.readFileSync(pathUtil.resolve(srcPath, 'main.js'),'utf8');
-let contentEncrypt = fs.readFileSync(pathUtil.resolve(srcPath, 'encrypt.js'),'utf8');
-let contentRequester = fs.readFileSync(pathUtil.resolve(srcPath, 'requester.js'),'utf8');
-let contentListener = fs.readFileSync(pathUtil.resolve(srcPath, 'listener.js'),'utf8');
-
-content = `
-${content}
-${contentEncrypt}
-${contentRequester}
-${contentListener}
-`
-content = es6_downgrade_util.update(content);
-fs.writeFileSync(pathUtil.resolve(distPath, 'messenger.src.js'), content); 
-
-var promise = compressor.minify({
-    compressor: 'uglifyjs',
-    input: pathUtil.resolve(distPath, 'messenger.src.js'),
-    output: pathUtil.resolve(distPath, 'temp_min.js'),
-    callback: function(err, min) {}
+let config = require('./webpack.config.dev')
+let compiler = webpack(config);
+compiler.run((err, stats) => {
+    console.log('err', err)
 });
-promise.then((min) => {
-    min = min.replace(/md5\_util/g, ('a'+Math.random()).replace(/\./ig, ''))
-    
-    min = clean(min)
 
-var mincontent = 
-`${license}
-;(()=>{
-${md5src}
-//--
-${min};
-window.messenger=messenger;
-})();`;
-
-var mincontentcmd = 
-`${license}
-//--
-;${md5src}
-;define(function (require, exports, module) {
-${min};module.exports = messenger;
-})`;
-
-var mincontentes6 = 
-`${license}
-import md5 from 'blueimp-md5'
-${min};
-export default messenger;
-`;
-
-    fs.writeFileSync(pathUtil.resolve(distPath, 'messenger.min.js'), mincontent); 
-    fs.writeFileSync(pathUtil.resolve(distPath, 'messenger.cmd.js'), mincontentcmd); 
-    fs.writeFileSync(pathUtil.resolve(distPath, 'messenger.es6.js'), mincontentes6); 
-    //fs.writeFileSync(pathUtil.resolve(distPath, 'postmessage-plus.cmd.js'), clean(content_cmd)); 
-    if(fs.existsSync(npmPath)){
-        fs.writeFileSync(pathUtil.resolve(npmPath, 'index.js'), mincontentes6);
-    }else{
-        console.log('can not output to:', npmPath)
-    }
-    console.log('done.')
-
-
+config = require('./webpack.config.product')
+let compiler_p = webpack(config)
+compiler_p.run((err, stats) => {
+    console.log('err_p', err)
 });

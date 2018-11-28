@@ -12,7 +12,7 @@ module.exports = {
         // ]
     },
     entry: {
-        'messengerjs': ['./src2/main.js'],
+        'messengerjs': ['./src/main.js'],
     },
     output: {
         path: pathutil.resolve(__dirname, "./dist/"),
