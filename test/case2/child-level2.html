@@ -1,0 +1,21 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+    <script src="../../dist/messengerjs.js" ></script>
+</head>
+<body>level2
+        <script type="text/javascript">
+            var ask = ()=>{
+                messenger.emit('askfromlevel2', 3).onResponse((result, msgInfo)=>{
+                    console.warn('got!', 'count='+msgInfo.count, 'result='+result)
+                })
+            }
+            messenger.listen('askAndReceiveTwice', ()=>{
+                return 'askAndReceiveTwice'
+            })
+        </script>
+        <button onclick="ask()">call</button>
+    <iframe id="frame1" src="./child-level3.html" ></iframe>
+
+</body>
+</html>

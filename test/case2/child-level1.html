@@ -1,0 +1,27 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+    <script src="../../dist/messengerjs.js" ></script>
+</head>
+<body>level1
+        <script type="text/javascript">
+            messenger.listen('asklevel1', ()=>{
+                return 'bar'
+            })
+            
+            messenger.listen('askfromlevel2', (num)=>{
+                var promise = new Promise((resolve, reject)=>{
+                    setTimeout(()=>{                        
+                        resolve(num*4);
+                    }, 300)
+                })
+                return promise;
+            })
+            messenger.listen('askAndReceiveTwice', ()=>{
+                return 'askAndReceiveTwice'
+            })
+        </script>
+    <iframe id="frame1" src="./child-level2.html" ></iframe>
+
+</body>
+</html>

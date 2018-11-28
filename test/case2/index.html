@@ -1,0 +1,44 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+    <script src="../../dist/messengerjs.js" ></script>
+</head>
+<body>
+    <script>
+        var callself=()=>{
+            messenger.emit('askSelf', 5).onResponse((result)=>{
+                console.warn('got-self!', result)
+            })
+        }
+        messenger.listen('askSelf', (num)=>{
+            return 'ooooo'+num
+        })
+        ////////////////////
+        var call=()=>{
+            messenger.emit('asklevel3', 11,22,true,[]).onResponse((result, msgInfo)=>{
+                console.warn('got!', result, 'count='+msgInfo.count)
+            })
+            messenger.emit('asklevel1', 11,22,true,[]).onResponse((result, msgInfo)=>{
+                console.warn('got!', result, 'count='+msgInfo.count)
+            })
+            messenger.emit('askAndReceiveTwice', 11,22,true,[]).onResponse((result, msgInfo)=>{
+                console.warn('should only receive twice!', 'count='+msgInfo.count, 'result='+result)
+                if(msgInfo.count >= 2)msgInfo.stopReceive();//stop receive
+            })
+        }
+        messenger.listen('askTop', ()=>{
+            return 'ooooooooooooo'
+        })
+        messenger.listen('askfromlevel2', (num)=>{
+            return num*2
+        })
+    </script>
+
+    <iframe id="frame1" src="./child-level1.html" ></iframe>
+    <iframe id="frame2" src="./child-level1.html" ></iframe>
+    <hr>
+    <button onclick="call()">call</button>
+    <button onclick="callself()">call-self</button>
+
+</body>
+</html>

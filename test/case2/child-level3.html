@@ -1,0 +1,28 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+    <script src="../../dist/messengerjs.js" ></script>
+</head>
+<body>level3
+    <script type="text/javascript">
+    
+        messenger.listen('askfromlevel2', (num)=>{
+            return num*3
+        })
+        messenger.listen('asklevel3', ()=>{
+            return 'wwwwwwwwwwwwwww'
+        })
+        messenger.listen('askAndReceiveTwice', ()=>{
+            return 'askAndReceiveTwice'
+        })
+
+        var askTop = ()=>{
+            messenger.emit('askTop', 3).onResponse((result)=>{
+                console.warn('got!', result)
+            })
+        }
+    </script>
+    <button onclick="askTop()">call</button>
+
+</body>
+</html>
