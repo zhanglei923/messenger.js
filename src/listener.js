@@ -10,27 +10,6 @@ let init = (messenger)=>{
             process(data.messengerjs)
         }
     }
-    var doResponse = (responseToken, result)=>{
-        //console.log('i-can-process-this-request:', eventName, args, responseToken, result)
-        var windows = messenger.getTargetWindows();
-        for(var i = 0; i < windows.length; i++){
-            var iframe = windows[i]
-            //console.log('send response:', eventName, responseToken, iframe)
-            var obj = {
-                messengerjs:{                          
-                    result
-                }
-            };
-            obj.messengerjs = encrypt.encryptMessageData(obj.messengerjs, {
-                isResp: true,
-                from: iframe.from,
-                responsePageId: messenger.getPageId(),
-                responseToken: encrypt.encodeStr(responseToken),
-            });
-            obj = JSON.parse(JSON.stringify(obj));
-            messenger.doPostMessage(iframe.win, obj, '*');
-        }
-    }
     var process = function(data){
         //invoke
         var args = data.args;
@@ -73,6 +52,27 @@ let init = (messenger)=>{
                 obj = JSON.parse(JSON.stringify(obj));
                 messenger.doPostMessage(window.parent, obj, '*');
             }
+        }
+    }    
+    var doResponse = (responseToken, result)=>{
+        //console.log('i-can-process-this-request:', eventName, args, responseToken, result)
+        var windows = messenger.getTargetWindows();
+        for(var i = 0; i < windows.length; i++){
+            var iframe = windows[i]
+            //console.log('send response:', eventName, responseToken, iframe)
+            var obj = {
+                messengerjs:{                          
+                    result
+                }
+            };
+            obj.messengerjs = encrypt.encryptMessageData(obj.messengerjs, {
+                isResp: true,
+                from: iframe.from,
+                responsePageId: messenger.getPageId(),
+                responseToken: encrypt.encodeStr(responseToken),
+            });
+            obj = JSON.parse(JSON.stringify(obj));
+            messenger.doPostMessage(iframe.win, obj, '*');
         }
     }
     messenger.listen = function(eventName, callback){
