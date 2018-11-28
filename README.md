@@ -6,7 +6,7 @@ A browser side event-bus.
 ##### two-way data transfer.
 ##### promise response supported.
 ##### cross domain and iframe.
-##### encrypted communication channel.
+##### encrypted communication data and channel.
 
 # Install
 
