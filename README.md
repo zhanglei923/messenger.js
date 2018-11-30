@@ -12,7 +12,7 @@ A browser side event-bus.
 
 script tag:
 ```html
-<script src="./messenger.min.js" ></script>
+<script src="./messengerjs.min.js" ></script>
 ```
 npm:
 ```javascript
